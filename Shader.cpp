@@ -1,8 +1,11 @@
-#include "Shader.h"
+#include "Include/Shader.h"
+#include "Include/Camera.h"
 #include <string>
+#include <glm/ext/matrix_transform.hpp>
 
-Shader::Shader()
+Shader::Shader(Camera* camera)
 {
+	this->camera = camera;
 	vertex_Shader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertex_Shader, 1, &vertex_shader, NULL);
 	glCompileShader(vertex_Shader);
@@ -27,6 +30,15 @@ Shader::Shader()
 	}
 }
 
+void Shader::updateCamera()
+{
+	glUseProgram(this->shader_Program);
+	GLint idViewTransform = glGetUniformLocation(this->shader_Program, "viewMatrix");
+	GLint idProjectionTransform = glGetUniformLocation(this->shader_Program, "projectionMatrix");
+	glUniformMatrix4fv(idViewTransform, 1, GL_FALSE, &this->camera->getViewMatrix()[0][0]);
+	glUniformMatrix4fv(idProjectionTransform, 1, GL_FALSE, &this->camera->getProjectionMatrix()[0][0]);
+}
+
 
 void Shader::useShader()
 {
@@ -35,10 +47,15 @@ void Shader::useShader()
 
 void Shader::setMatrixModel(glm::mat4 modelMatrix)
 {
+	GLint idProjectionTransform = glGetUniformLocation(this->shader_Program, "projectionMatrix");
+	GLint idViewTransform = glGetUniformLocation(this->shader_Program, "viewMatrix");
 	GLint idModelTransform = glGetUniformLocation(this->shader_Program, "modelMatrix");
 	glUseProgram(this->shader_Program);
 	glUniformMatrix4fv(idModelTransform, 1, GL_FALSE, &modelMatrix[0][0]);
+	glUniformMatrix4fv(idViewTransform, 1, GL_FALSE, &this->camera->getViewMatrix()[0][0]);
+	glUniformMatrix4fv(idProjectionTransform, 1, GL_FALSE, &this->camera->getProjectionMatrix()[0][0]);
 }
+
 
 Shader::~Shader()
 {
@@ -47,4 +64,5 @@ Shader::~Shader()
 	glDeleteShader(fragment_Shader);
 	delete vertex_shader;
 	delete fragment_shader;
+	delete camera;
 }

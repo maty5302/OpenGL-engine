@@ -1,14 +1,4 @@
-#include "Application.h"
-//#include "Models/suzi_flat.h"
-#include "Models/suzi_smooth.h"
-#include "Models/sphere.h"
-#include "Models/plain.h"
-#include "TransformationComposite.h"
-#include "Rotation.h"
-#include "Scale.h"
-#include "Translation.h"
-
-
+#include "Include/Application.h"
 
 void Application::initialization()
 {
@@ -48,28 +38,9 @@ void Application::initialization()
 	glEnable(GL_DEPTH_TEST);
 }
 
-void Application::createShaderAndModels()
-{
-	this->renderModels.push_back(new RenderModel(sphere, 17280));
-	this->renderModels[0]->addTransformation(new Scale(glm::vec3(0.3f)));
-	this->renderModels[0]->addTransformation(new Translation(glm::vec3(-1.5f, -0.7f, 0.0f)));
-	this->renderModels[0]->addTransformation(new Rotation(2.f, glm::vec3(0.0f, 1.0f, 0.0f)));
-	this->renderModels[0]->applyTransformations();
-	
-	this->renderModels.push_back(new RenderModel(suziSmooth, 17424));
-	this->renderModels[1]->addTransformation(new Scale(glm::vec3(0.4f)));
-	this->renderModels[1]->addTransformation(new Translation(glm::vec3(1.0f, 1.4f, 1.0f)));
-	this->renderModels[1]->addTransformation(new Rotation(2.f, glm::vec3(0.0f, 1.0f, 0.0f)));
-	this->renderModels[1]->applyTransformations();
-
-	this->renderModels.push_back(new RenderModel(sphere, 17280));
-	this->renderModels[2]->addTransformation(new Scale(glm::vec3(0.2f)));
-	this->renderModels[2]->addTransformation(new Translation(glm::vec3(2.f, 2.5f, 0.0f)));
-	this->renderModels[2]->applyTransformations();
-}
-
 void Application::run()
 {
+	Scene* scene = new Scene();
 	glfwSetKeyCallback(window, Callback::key_callback);
 	glfwSetCursorPosCallback(window, Callback::cursor_callback);
 	glfwSetMouseButtonCallback(window, Callback::button_callback);
@@ -80,12 +51,7 @@ void Application::run()
 	while (!glfwWindowShouldClose(window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		for (size_t i = 0; i < renderModels.size(); i++)
-		{		
-			this->renderModels[i]->addTransformation(new Rotation(0.01f, glm::vec3(0.0f, 1.0f, 0.0f)));
-			this->renderModels[i]->applyTransformations();
-			this->renderModels[i]->render();
-		}
+		scene->render();		
 		// update other events like input handling
 		glfwPollEvents();
 		// put the stuff we’ve been drawing onto the display

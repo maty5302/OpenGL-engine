@@ -16,6 +16,12 @@
     <Filter Include="Header Files\Models">
       <UniqueIdentifier>{fdd1578d-a0cf-4f6b-a875-119c1f94623a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Transformation">
+      <UniqueIdentifier>{121091f4-3bdf-43d8-b69c-50ee9cc65634}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Transformation">
+      <UniqueIdentifier>{3c08010c-bbb3-4af6-814e-a03d55d85537}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -33,35 +39,29 @@
     <ClCompile Include="RenderModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TransformationComposite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Rotation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scale.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Translation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Callback.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Translation.cpp">
+      <Filter>Source Files\Transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformationComposite.cpp">
+      <Filter>Source Files\Transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="Scale.cpp">
+      <Filter>Source Files\Transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="Rotation.cpp">
+      <Filter>Source Files\Transformation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Models\plain.h">
       <Filter>Header Files\Models</Filter>
     </ClInclude>
@@ -74,22 +74,40 @@
     <ClInclude Include="Models\suzi_smooth.h">
       <Filter>Header Files\Models</Filter>
     </ClInclude>
-    <ClInclude Include="Transformation.h">
+    <ClInclude Include="Include\Transformation\Rotation.h">
+      <Filter>Header Files\Transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Transformation\Scale.h">
+      <Filter>Header Files\Transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Transformation\Transformation.h">
+      <Filter>Header Files\Transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Transformation\TransformationComposite.h">
+      <Filter>Header Files\Transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Transformation\Translation.h">
+      <Filter>Header Files\Transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TransformationComposite.h">
+    <ClInclude Include="Include\Callback.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Rotation.h">
+    <ClInclude Include="Include\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scale.h">
+    <ClInclude Include="Include\Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Translation.h">
+    <ClInclude Include="Include\RenderModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Callback.h">
+    <ClInclude Include="Include\Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

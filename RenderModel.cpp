@@ -1,11 +1,11 @@
-#include "RenderModel.h"
-#include "TransformationComposite.h"
+#include "Include/RenderModel.h"
+#include "Include/Transformation/TransformationComposite.h"
 
-RenderModel::RenderModel(const float points[], int pointsCount)
+RenderModel::RenderModel(const float points[], int pointsCount,Shader* shader)
 {
 	glm::mat4 defaulfM = glm::mat4(1.0f);
 	this->model = new Model(points, pointsCount);
-	this->shader = new Shader();
+	this->shader = shader;
 	this->transform = new TransformationComposite();
 	this->shader->useShader();
 	this->shader->setMatrixModel(defaulfM);
@@ -29,7 +29,7 @@ void RenderModel::removeTransformation(Transformation* transformation)
 
 void RenderModel::render()
 {
-	this->shader->useShader();
+	this->shader->updateCamera();
 	this->model->useModel();	
 }
 
