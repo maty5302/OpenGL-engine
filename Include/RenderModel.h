@@ -2,10 +2,10 @@
 #include <string>
 #include <iostream>
 #include <glm/vec4.hpp>
-#include "Model.h"
-#include "Shader.h"
-#include "Transformation.h"
-#include "TransformationComposite.h"
+#include "Include/Model.h"
+#include "Include/Shader.h"
+#include "Include/Transformation/Transformation.h"
+#include "Include/Transformation/TransformationComposite.h"
 class RenderModel
 {
 private: 
@@ -13,7 +13,7 @@ private:
 	Shader* shader;
 	TransformationComposite* transform;
 public:
-	RenderModel(const float points[], int pointsCount);
+	RenderModel(const float points[], int pointsCount,Shader* shader);
 	void applyTransformations();
 	void addTransformation(Transformation* transformation);
 	void removeTransformation(Transformation* transformation);

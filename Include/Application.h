@@ -3,17 +3,14 @@
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "RenderModel.h"
-#include "Callback.h"
+#include "Include/Scene.h"
+#include "Include/Callback.h"
 class Application
 {
 private:
-	GLFWwindow* window;
-	std::vector<RenderModel*> renderModels;
-	
+	GLFWwindow* window;	
 public:
 	void initialization();
-	void createShaderAndModels();
 	void run();
 	Application();
 	~Application();      
