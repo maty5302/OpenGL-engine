@@ -16,6 +16,16 @@ Scene::~Scene()
 	delete this->camera;
 }
 
+Camera* Scene::getCamera()
+{
+	return this->camera;
+}
+
+Subject* Scene::getSubject()
+{
+	return this->subject;
+}
+
 void Scene::makeScene()
 {
 	this->camera = new Camera();
@@ -39,7 +49,13 @@ void Scene::makeScene()
 	this->camera->addShader(shader);
 	this->camera->addShader(shader2);
 	this->camera->addShader(shader3);
+	this->subject = new Subject();
+	subject->addObserver(this->camera);
+	subject->addObserver(shader);
+	subject->addObserver(shader2);
+	subject->addObserver(shader3);
 }
+
 
 void Scene::addModel(RenderModel* model)
 {

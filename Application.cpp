@@ -1,5 +1,10 @@
 #include "Include/Application.h"
 
+Scene* Application::getScene()
+{
+	return this->scene;
+}
+
 void Application::initialization()
 {
 	glfwSetErrorCallback(Callback::error_callback);
@@ -7,14 +12,16 @@ void Application::initialization()
 		fprintf(stderr, "ERROR: could not start GLFW3\n");
 		exit(EXIT_FAILURE);
 	}
-	window = glfwCreateWindow(640, 480, "ZPG - PRU0059", NULL, NULL);
+	window = glfwCreateWindow(800, 600, "ZPG - PRU0059", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
 	glfwMakeContextCurrent(window);
-	glfwSwapInterval(1);
+	glfwSwapInterval(1); 
+	glfwSetWindowUserPointer(window, this);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	glewExperimental = GL_TRUE;
 	glewInit();
@@ -40,7 +47,7 @@ void Application::initialization()
 
 void Application::run()
 {
-	Scene* scene = new Scene();
+	this->scene= new Scene();
 	glfwSetKeyCallback(window, Callback::key_callback);
 	glfwSetCursorPosCallback(window, Callback::cursor_callback);
 	glfwSetMouseButtonCallback(window, Callback::button_callback);

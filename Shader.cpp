@@ -30,7 +30,7 @@ Shader::Shader(Camera* camera)
 	}
 }
 
-void Shader::updateCamera()
+void Shader::update()
 {
 	glUseProgram(this->shader_Program);
 	GLint idViewTransform = glGetUniformLocation(this->shader_Program, "viewMatrix");

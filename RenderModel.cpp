@@ -29,7 +29,7 @@ void RenderModel::removeTransformation(Transformation* transformation)
 
 void RenderModel::render()
 {
-	this->shader->updateCamera();
+	this->shader->useShader();
 	this->model->useModel();	
 }
 

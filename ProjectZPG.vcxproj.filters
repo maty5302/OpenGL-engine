@@ -22,6 +22,12 @@
     <Filter Include="Source Files\Transformation">
       <UniqueIdentifier>{3c08010c-bbb3-4af6-814e-a03d55d85537}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Observer">
+      <UniqueIdentifier>{57e8e4d1-8dca-4c5b-8f57-392c7ff90964}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Observer">
+      <UniqueIdentifier>{52e005f4-45de-4afc-9790-f8fd76336495}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -59,6 +65,9 @@
     </ClCompile>
     <ClCompile Include="Rotation.cpp">
       <Filter>Source Files\Transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Source Files\Observer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +118,12 @@
     </ClInclude>
     <ClInclude Include="Include\Shader.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Observer\Observer.h">
+      <Filter>Header Files\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Observer\Subject.h">
+      <Filter>Header Files\Observer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

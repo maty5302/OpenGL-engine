@@ -9,7 +9,10 @@ class Application
 {
 private:
 	GLFWwindow* window;	
+	Scene* scene;
 public:
+	float lastX = 400, lastY = 300;
+	Scene* getScene();
 	void initialization();
 	void run();
 	Application();

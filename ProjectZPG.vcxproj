@@ -145,6 +145,7 @@
     <ClCompile Include="Scale.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Subject.cpp" />
     <ClCompile Include="TransformationComposite.cpp" />
     <ClCompile Include="Translation.cpp" />
   </ItemGroup>
@@ -153,6 +154,8 @@
     <ClInclude Include="Include\Callback.h" />
     <ClInclude Include="Include\Camera.h" />
     <ClInclude Include="Include\Model.h" />
+    <ClInclude Include="Include\Observer\Observer.h" />
+    <ClInclude Include="Include\Observer\Subject.h" />
     <ClInclude Include="Include\RenderModel.h" />
     <ClInclude Include="Include\Scene.h" />
     <ClInclude Include="Include\Shader.h" />
