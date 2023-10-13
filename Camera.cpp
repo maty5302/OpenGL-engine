@@ -16,6 +16,10 @@ Camera::Camera()
 
 Camera::~Camera()
 {
+    for (Shader* shader : this->shaders)
+    {
+		delete shader;
+	}
 }
 
 glm::vec3 Camera::getEye()
