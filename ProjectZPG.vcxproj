@@ -138,6 +138,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Callback.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="FileLoader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="RenderModel.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="Include\Application.h" />
     <ClInclude Include="Include\Callback.h" />
     <ClInclude Include="Include\Camera.h" />
+    <ClInclude Include="Include\FileLoader.h" />
     <ClInclude Include="Include\Model.h" />
     <ClInclude Include="Include\Observer\Observer.h" />
     <ClInclude Include="Include\Observer\Subject.h" />
@@ -164,10 +166,17 @@
     <ClInclude Include="Include\Transformation\Transformation.h" />
     <ClInclude Include="Include\Transformation\TransformationComposite.h" />
     <ClInclude Include="Include\Transformation\Translation.h" />
+    <ClInclude Include="Models\bushes.h" />
+    <ClInclude Include="Models\gift.h" />
     <ClInclude Include="Models\plain.h" />
     <ClInclude Include="Models\sphere.h" />
     <ClInclude Include="Models\suzi_flat.h" />
     <ClInclude Include="Models\suzi_smooth.h" />
+    <ClInclude Include="Models\tree.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\fragment.frag" />
+    <None Include="Shaders\vertex.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

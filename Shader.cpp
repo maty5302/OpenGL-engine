@@ -3,20 +3,19 @@
 #include <string>
 #include <glm/ext/matrix_transform.hpp>
 
-Shader::Shader(Camera* camera)
+Shader::Shader(Camera* camera, const char* vertex_shaderr, const char* fragment_shaderr)
 {
 	this->camera = camera;
 	vertex_Shader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertex_Shader, 1, &vertex_shader, NULL);
+	glShaderSource(vertex_Shader, 1, &vertex_shaderr, NULL);
 	glCompileShader(vertex_Shader);
 	fragment_Shader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragment_Shader, 1, &fragment_shader, NULL);
+	glShaderSource(fragment_Shader, 1, &fragment_shaderr, NULL);
 	glCompileShader(fragment_Shader);
 	shader_Program = glCreateProgram();
 	glAttachShader(shader_Program, fragment_Shader);
 	glAttachShader(shader_Program, vertex_Shader);
 	glLinkProgram(shader_Program);
-
 	GLint status;
 	glGetProgramiv(shader_Program, GL_LINK_STATUS, &status);
 	if (status == GL_FALSE)
@@ -62,7 +61,5 @@ Shader::~Shader()
 	glDeleteProgram(shader_Program);
 	glDeleteShader(vertex_Shader);
 	glDeleteShader(fragment_Shader);
-	delete vertex_shader;
-	delete fragment_shader;
 	delete camera;
 }
