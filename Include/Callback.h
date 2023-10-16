@@ -5,7 +5,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "Application.h"
-class Callback
+static class Callback
 {
 public:
 	static void error_callback(int error, const char* description);
