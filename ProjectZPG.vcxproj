@@ -166,7 +166,7 @@
     <ClInclude Include="Include\Transformation\Transformation.h" />
     <ClInclude Include="Include\Transformation\TransformationComposite.h" />
     <ClInclude Include="Include\Transformation\Translation.h" />
-    <ClInclude Include="Models\bushes.h" />
+    <ClInclude Include="Models\bushes.hpp" />
     <ClInclude Include="Models\gift.h" />
     <ClInclude Include="Models\plain.h" />
     <ClInclude Include="Models\sphere.h" />
