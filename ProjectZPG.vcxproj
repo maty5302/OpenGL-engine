@@ -135,20 +135,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Callback.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="FileLoader.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="RenderModel.cpp" />
-    <ClCompile Include="Rotation.cpp" />
-    <ClCompile Include="Scale.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="Subject.cpp" />
-    <ClCompile Include="TransformationComposite.cpp" />
-    <ClCompile Include="Translation.cpp" />
+    <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\Callback.cpp" />
+    <ClCompile Include="Source\Camera.cpp" />
+    <ClCompile Include="Source\FileLoader.cpp" />
+    <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Model.cpp" />
+    <ClCompile Include="Source\RenderModel.cpp" />
+    <ClCompile Include="Source\Rotation.cpp" />
+    <ClCompile Include="Source\Scale.cpp" />
+    <ClCompile Include="Source\Scene.cpp" />
+    <ClCompile Include="Source\Shader.cpp" />
+    <ClCompile Include="Source\Subject.cpp" />
+    <ClCompile Include="Source\TransformationComposite.cpp" />
+    <ClCompile Include="Source\Translation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Application.h" />

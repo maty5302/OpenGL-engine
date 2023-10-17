@@ -4,7 +4,7 @@
 #include <glm/vec3.hpp>
 #include <glm/mat4x4.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
-#include "Include/Observer/Observer.h"
+#include "../Include/Observer/Observer.h"
 class Camera;
 class Shader : public Observer
 {

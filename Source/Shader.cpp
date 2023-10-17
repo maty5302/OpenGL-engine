@@ -1,5 +1,5 @@
-#include "Include/Shader.h"
-#include "Include/Camera.h"
+#include "../Include/Shader.h"
+#include "../Include/Camera.h"
 #include <string>
 #include <glm/ext/matrix_transform.hpp>
 

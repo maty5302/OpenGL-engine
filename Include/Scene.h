@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
-#include "Include/RenderModel.h"
-#include "Include/Observer/Subject.h"
+#include "../Include/RenderModel.h"
+#include "../Include/Observer/Subject.h"
 class Scene
 {
 private:

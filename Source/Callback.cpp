@@ -1,5 +1,5 @@
-#include "Include/Callback.h"
-#include "Include/Camera.h"
+#include "../Include/Callback.h"
+#include "../Include/Camera.h"
 
 void Callback::error_callback(int error, const char* description)
 {

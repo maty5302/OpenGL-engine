@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "Shader.h"
-#include "Include/Observer/Observer.h"
+#include "../Include/Observer/Observer.h"
 class Shader;
 class Camera : public Observer
 {

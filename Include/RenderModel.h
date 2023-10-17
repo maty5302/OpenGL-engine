@@ -2,10 +2,10 @@
 #include <string>
 #include <iostream>
 #include <glm/vec4.hpp>
-#include "Include/Model.h"
-#include "Include/Shader.h"
-#include "Include/Transformation/Transformation.h"
-#include "Include/Transformation/TransformationComposite.h"
+#include "../Include/Model.h"
+#include "../Include/Shader.h"
+#include "../Include/Transformation/Transformation.h"
+#include "../Include/Transformation/TransformationComposite.h"
 class RenderModel
 {
 private: 
