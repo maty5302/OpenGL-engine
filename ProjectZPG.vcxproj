@@ -167,12 +167,12 @@
     <ClInclude Include="Include\Transformation\TransformationComposite.h" />
     <ClInclude Include="Include\Transformation\Translation.h" />
     <ClInclude Include="Models\bushes.hpp" />
-    <ClInclude Include="Models\gift.h" />
-    <ClInclude Include="Models\plain.h" />
-    <ClInclude Include="Models\sphere.h" />
-    <ClInclude Include="Models\suzi_flat.h" />
-    <ClInclude Include="Models\suzi_smooth.h" />
-    <ClInclude Include="Models\tree.h" />
+    <ClInclude Include="Models\gift.hpp" />
+    <ClInclude Include="Models\plain.hpp" />
+    <ClInclude Include="Models\sphere.hpp" />
+    <ClInclude Include="Models\suzi_flat.hpp" />
+    <ClInclude Include="Models\suzi_smooth.hpp" />
+    <ClInclude Include="Models\tree.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\fragment.frag" />

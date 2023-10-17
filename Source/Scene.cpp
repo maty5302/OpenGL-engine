@@ -4,8 +4,8 @@
 #include "../Include/Transformation/Rotation.h"
 #include "../Include/Transformation/Translation.h"
 #include "../Include/Transformation/Scale.h"
-#include "../Models/sphere.h";
-#include "../Models/suzi_smooth.h";
+#include "../Models/sphere.hpp";
+#include "../Models/suzi_smooth.hpp";
 
 Scene::Scene()
 {
