@@ -1,3 +1,10 @@
+/**
+* @file Shader.h
+*
+* @brief Class used to create and use shaders
+*
+* @author Prudil Matìj PRU0059
+* */
 #pragma once
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>

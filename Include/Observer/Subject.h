@@ -9,6 +9,6 @@ public:
 	Subject();
 	~Subject();
 	void addObserver(Observer* observer);
-	void notify();
+	virtual void notify();
 };
 

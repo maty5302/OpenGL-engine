@@ -1,3 +1,10 @@
+/**
+* @file Application.h
+*
+* @brief Handles the application, window and scenes
+*
+* @author Prudil Matìj PRU0059
+* */
 #pragma once
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>

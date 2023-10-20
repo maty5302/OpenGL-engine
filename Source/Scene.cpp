@@ -10,7 +10,6 @@
 Scene::Scene()
 {
 	this->camera = new Camera();
-	this->subject = new Subject();
 	this->makeScene();
 }
 
@@ -24,16 +23,11 @@ Camera* Scene::getCamera()
 	return this->camera;
 }
 
-Subject* Scene::getSubject()
-{
-	return this->subject;
-}
-
 void Scene::makeScene()
 {
-	Shader* shader = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentlights.frag").c_str());
+	Shader* shader = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexConstant.vert").c_str(), FileLoader::loadShader("Shaders/fragmentConstant.frag").c_str());
 	Shader* shader2 = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentlights.frag").c_str());
-	Shader* shader3 = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentlights.frag").c_str());
+	Shader* shader3 = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentPhong.frag").c_str());
 	Shader* shader4 = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentlights.frag").c_str());
 	this->addModel(new RenderModel(sphere, 17280, shader));
 	this->models[0]->addTransformation(new Scale(glm::vec3(0.7f)));
@@ -55,11 +49,6 @@ void Scene::makeScene()
 	this->camera->addShader(shader2);
 	this->camera->addShader(shader3);
 	this->camera->addShader(shader4);
-	subject->addObserver(this->camera);
-	subject->addObserver(shader);
-	subject->addObserver(shader2);
-	subject->addObserver(shader3);
-	subject->addObserver(shader4);
 }
 
 

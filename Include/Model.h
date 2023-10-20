@@ -1,3 +1,10 @@
+/**
+* @file Model.h
+*
+* @brief Used for creating models from points
+*
+* @author Prudil Matìj PRU0059
+* */
 #pragma once
 #include <iostream>
 #include <vector>

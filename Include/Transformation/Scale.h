@@ -1,3 +1,10 @@
+/**
+* @file Scale.h
+*
+* @brief Class for scaling objects
+*
+* @author Prudil Matìj PRU0059
+* */
 #pragma once
 #include "Transformation.h"
 class Scale : public Transformation

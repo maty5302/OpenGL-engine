@@ -1,3 +1,10 @@
+/**
+* @file TransformationComposite.h
+*
+* @brief Composite pattern for transformations
+*
+* @author Prudil Matìj PRU0059
+* */
 #pragma once
 #include <vector> 
 #include "Transformation.h"

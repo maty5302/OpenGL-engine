@@ -1,3 +1,10 @@
+/**
+* @file Rotation.h
+*
+* @brief Class used for rotation of objects
+*
+* @author Prudil Matìj PRU0059
+* */
 #pragma once
 #include "Transformation.h"
 class Rotation : public Transformation

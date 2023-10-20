@@ -1,3 +1,10 @@
+/**
+* @file Translation.h
+*
+* @brief Class used for translation of objects
+*
+* @author Prudil Matìj PRU0059
+* */
 #pragma once
 #include "Transformation.h"
 class Translation : public Transformation

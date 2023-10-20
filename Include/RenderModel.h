@@ -1,3 +1,10 @@
+/**
+* @file RenderModel.h
+*
+* @brief Used to render model with shader and transformations
+*
+* @author Prudil Matìj PRU0059
+* */
 #pragma once
 #include <string>
 #include <iostream>

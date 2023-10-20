@@ -19,14 +19,14 @@ void Callback::key_callback(GLFWwindow* window, int key, int scancode, int actio
 			glm::vec3 a = c->getEye();
 			a += c->getTarget() * c->getSpeed();
 			c->setEye(a);
-			app->getScene()->getSubject()->notify();
+			app->getScene()->getCamera()->notify();
 		}
 		if (key == GLFW_KEY_S && (action == GLFW_PRESS || action == 2))
 		{
 			glm::vec3 a = c->getEye();
 			a -= c->getTarget() * c->getSpeed();
 			c->setEye(a);
-			app->getScene()->getSubject()->notify();
+			app->getScene()->getCamera()->notify();
 		}
 		if (key == GLFW_KEY_A && (action == GLFW_PRESS || action == 2))
 		{
@@ -34,7 +34,7 @@ void Callback::key_callback(GLFWwindow* window, int key, int scancode, int actio
 			glm::vec3 b = glm::cross(c->getTarget(), c->getUp());
 			a -= b * c->getSpeed();
 			c->setEye(a);
-			app->getScene()->getSubject()->notify();
+			app->getScene()->getCamera()->notify();
 		}
 		if (key == GLFW_KEY_D && (action == GLFW_PRESS || action == 2))
 		{
@@ -42,7 +42,7 @@ void Callback::key_callback(GLFWwindow* window, int key, int scancode, int actio
 			glm::vec3 b = glm::cross(c->getTarget(), c->getUp());
 			a += b * c->getSpeed();
 			c->setEye(a);
-			app->getScene()->getSubject()->notify();
+			app->getScene()->getCamera()->notify();
 		}
 	}
 	
@@ -88,7 +88,7 @@ void Callback::cursor_callback(GLFWwindow* window, double x, double y)
 		front.y = sin(glm::radians(c->pitch));
 		front.z = sin(glm::radians(c->yaw)) * cos(glm::radians(c->pitch));
 		c->setTarget(glm::normalize(front));
-		app->getScene()->getSubject()->notify();
+		app->getScene()->getCamera()->notify();
 	}
 	printf("cursor_callback [%f,%f]\n",x,y);
 }

@@ -16,10 +16,6 @@ Camera::Camera()
 
 Camera::~Camera()
 {
-    for (Shader* shader : this->shaders)
-    {
-		delete shader;
-	}
 }
 
 glm::vec3 Camera::getEye()
@@ -57,14 +53,6 @@ void Camera::setTarget(glm::vec3 target)
     this->target = target;
 }
 
-void Camera::update()
-{
-    for (Shader* shader : this->shaders)
-    {
-        shader->update();
-    }
-}
-
 glm::mat4 Camera::getViewMatrix()
 {
     return glm::lookAt(eye, eye + target, up);
@@ -77,5 +65,10 @@ glm::mat4 Camera::getProjectionMatrix()
 
 void Camera::addShader(Shader* shader)
 {   
-	this->shaders.push_back(shader);
+    subject.addObserver(shader);
+}
+
+void Camera::notify()
+{
+    subject.notify();
 }

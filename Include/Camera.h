@@ -1,12 +1,19 @@
+/**
+* @file Camera.h
+*
+* @brief Camera used to render the scene from the perspective of the camera
+*
+* @author Prudil Matìj PRU0059
+* */
 #pragma once
 #include <vector>
 #include "Shader.h"
-#include "../Include/Observer/Observer.h"
+#include "../Include/Observer/Subject.h"
 class Shader;
-class Camera : public Observer
+class Camera : public Subject 
 {
 private:
-	std::vector<Shader*> shaders;
+	Subject subject;
 	glm::vec3 eye;
 	glm::vec3 target;
 	glm::vec3 up;
@@ -33,6 +40,6 @@ public:
 	void setTarget(glm::vec3 target);
 
 	void addShader(Shader* shader);
-	void update() override;
+	void notify() override;
 };
 
