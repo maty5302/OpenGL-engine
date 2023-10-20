@@ -1,5 +1,5 @@
-#include "../Include/Shader.h"
-#include "../Include/Camera.h"
+#include "../Headers/Shader.h"
+#include "../Headers/Camera.h"
 #include <string>
 #include <glm/ext/matrix_transform.hpp>
 
@@ -31,11 +31,13 @@ Shader::Shader(Camera* camera, const char* vertex_shaderr, const char* fragment_
 
 void Shader::update()
 {
-	glUseProgram(this->shader_Program);
 	GLint idViewTransform = glGetUniformLocation(this->shader_Program, "viewMatrix");
 	GLint idProjectionTransform = glGetUniformLocation(this->shader_Program, "projectionMatrix");
+	GLint idCameraPosition = glGetUniformLocation(this->shader_Program, "cameraPosition");
+	glUseProgram(this->shader_Program);
 	glUniformMatrix4fv(idViewTransform, 1, GL_FALSE, &this->camera->getViewMatrix()[0][0]);
 	glUniformMatrix4fv(idProjectionTransform, 1, GL_FALSE, &this->camera->getProjectionMatrix()[0][0]);
+	glUniform3f(idCameraPosition, this->camera->getEye().x, this->camera->getEye().y, this->camera->getEye().z);
 }
 
 
