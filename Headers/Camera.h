@@ -8,7 +8,7 @@
 #pragma once
 #include <vector>
 #include "Shader.h"
-#include "../Include/Observer/Subject.h"
+#include "../Headers/Observer/Subject.h"
 class Shader;
 class Camera : public Subject 
 {

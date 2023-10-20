@@ -6,7 +6,7 @@
 * @author Prudil Matìj PRU0059
 * */
 
-#include "../Include/Application.h"
+#include "../Headers/Application.h"
 
 int main(void)
 {

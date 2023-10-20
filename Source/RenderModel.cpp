@@ -1,5 +1,5 @@
-#include "../Include/RenderModel.h"
-#include "../Include/Transformation/TransformationComposite.h"
+#include "../Headers/RenderModel.h"
+#include "../Headers/Transformation/TransformationComposite.h"
 
 RenderModel::RenderModel(const float points[], int pointsCount,Shader* shader)
 {

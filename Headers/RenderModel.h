@@ -9,10 +9,10 @@
 #include <string>
 #include <iostream>
 #include <glm/vec4.hpp>
-#include "../Include/Model.h"
-#include "../Include/Shader.h"
-#include "../Include/Transformation/Transformation.h"
-#include "../Include/Transformation/TransformationComposite.h"
+#include "../Headers/Model.h"
+#include "../Headers/Shader.h"
+#include "../Headers/Transformation/Transformation.h"
+#include "../Headers/Transformation/TransformationComposite.h"
 class RenderModel
 {
 private: 

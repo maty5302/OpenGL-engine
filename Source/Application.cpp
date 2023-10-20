@@ -1,4 +1,4 @@
-#include "../Include/Application.h"
+#include "../Headers/Application.h"
 
 Scene* Application::getScene()
 {

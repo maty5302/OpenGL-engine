@@ -10,8 +10,8 @@
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "../Include/Scene.h"
-#include "../Include/Callback.h"
+#include "../Headers/Scene.h"
+#include "../Headers/Callback.h"
 class Application
 {
 private:

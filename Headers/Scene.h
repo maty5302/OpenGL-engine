@@ -7,8 +7,8 @@
 * */
 #pragma once
 #include <vector>
-#include "../Include/RenderModel.h"
-#include "../Include/Observer/Subject.h"
+#include "../Headers/RenderModel.h"
+#include "../Headers/Observer/Subject.h"
 class Scene
 {
 private:
@@ -19,6 +19,8 @@ public:
 	~Scene();
 	Camera* getCamera();
 	void makeScene();
+	void makeScene2();
+	void makeScene3();
 	void addModel(RenderModel* model);
 	void render();
 };
