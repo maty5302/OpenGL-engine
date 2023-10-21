@@ -139,6 +139,7 @@
     <ClCompile Include="Source\Callback.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\FileLoader.cpp" />
+    <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="Source\RenderModel.cpp" />
@@ -151,21 +152,32 @@
     <ClCompile Include="Source\Translation.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\Application.h" />
-    <ClInclude Include="Include\Callback.h" />
-    <ClInclude Include="Include\Camera.h" />
-    <ClInclude Include="Include\FileLoader.h" />
-    <ClInclude Include="Include\Model.h" />
-    <ClInclude Include="Include\Observer\Observer.h" />
-    <ClInclude Include="Include\Observer\Subject.h" />
-    <ClInclude Include="Include\RenderModel.h" />
-    <ClInclude Include="Include\Scene.h" />
-    <ClInclude Include="Include\Shader.h" />
-    <ClInclude Include="Include\Transformation\Rotation.h" />
-    <ClInclude Include="Include\Transformation\Scale.h" />
-    <ClInclude Include="Include\Transformation\Transformation.h" />
-    <ClInclude Include="Include\Transformation\TransformationComposite.h" />
-    <ClInclude Include="Include\Transformation\Translation.h" />
+    <None Include="Shaders\fragment.frag" />
+    <None Include="Shaders\fragmentBlinn.frag" />
+    <None Include="Shaders\fragmentConstant.frag" />
+    <None Include="Shaders\fragmentLambert.frag" />
+    <None Include="Shaders\fragmentPhong.frag" />
+    <None Include="Shaders\vertex.vert" />
+    <None Include="Shaders\vertexConstant.vert" />
+    <None Include="Shaders\vertexlights.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Headers\Application.h" />
+    <ClInclude Include="Headers\Callback.h" />
+    <ClInclude Include="Headers\Camera.h" />
+    <ClInclude Include="Headers\FileLoader.h" />
+    <ClInclude Include="Headers\Light.h" />
+    <ClInclude Include="Headers\Model.h" />
+    <ClInclude Include="Headers\Observer\Observer.h" />
+    <ClInclude Include="Headers\Observer\Subject.h" />
+    <ClInclude Include="Headers\RenderModel.h" />
+    <ClInclude Include="Headers\Scene.h" />
+    <ClInclude Include="Headers\Shader.h" />
+    <ClInclude Include="Headers\Transformation\Rotation.h" />
+    <ClInclude Include="Headers\Transformation\Scale.h" />
+    <ClInclude Include="Headers\Transformation\Transformation.h" />
+    <ClInclude Include="Headers\Transformation\TransformationComposite.h" />
+    <ClInclude Include="Headers\Transformation\Translation.h" />
     <ClInclude Include="Models\bushes.hpp" />
     <ClInclude Include="Models\gift.hpp" />
     <ClInclude Include="Models\plain.hpp" />
@@ -173,10 +185,6 @@
     <ClInclude Include="Models\suzi_flat.hpp" />
     <ClInclude Include="Models\suzi_smooth.hpp" />
     <ClInclude Include="Models\tree.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Shaders\fragment.frag" />
-    <None Include="Shaders\vertex.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

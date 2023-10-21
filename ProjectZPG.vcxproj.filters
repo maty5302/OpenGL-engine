@@ -51,29 +51,109 @@
     <ClCompile Include="Source\RenderModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Rotation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scale.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Subject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TransformationComposite.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Transformation</Filter>
     </ClCompile>
     <ClCompile Include="Source\Translation.cpp">
+      <Filter>Source Files\Transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scale.cpp">
+      <Filter>Source Files\Transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Rotation.cpp">
+      <Filter>Source Files\Transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Subject.cpp">
+      <Filter>Source Files\Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shaders\fragment.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\vertex.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\fragmentLambert.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\vertexlights.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\fragmentConstant.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\vertexConstant.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\fragmentPhong.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\fragmentBlinn.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Headers\Observer\Observer.h">
+      <Filter>Header Files\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Observer\Subject.h">
+      <Filter>Header Files\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Transformation\Rotation.h">
+      <Filter>Header Files\Transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Transformation\Scale.h">
+      <Filter>Header Files\Transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Transformation\Transformation.h">
+      <Filter>Header Files\Transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Transformation\TransformationComposite.h">
+      <Filter>Header Files\Transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Transformation\Translation.h">
+      <Filter>Header Files\Transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Callback.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\FileLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\RenderModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\bushes.hpp">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\gift.hpp">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
     <ClInclude Include="Models\plain.hpp">
       <Filter>Header Files\Models</Filter>
     </ClInclude>
@@ -86,67 +166,11 @@
     <ClInclude Include="Models\suzi_smooth.hpp">
       <Filter>Header Files\Models</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Transformation\Rotation.h">
-      <Filter>Header Files\Transformation</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Transformation\Scale.h">
-      <Filter>Header Files\Transformation</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Transformation\Transformation.h">
-      <Filter>Header Files\Transformation</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Transformation\TransformationComposite.h">
-      <Filter>Header Files\Transformation</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Transformation\Translation.h">
-      <Filter>Header Files\Transformation</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Callback.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Model.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\RenderModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Observer\Observer.h">
-      <Filter>Header Files\Observer</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Observer\Subject.h">
-      <Filter>Header Files\Observer</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\FileLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\bushes.hpp">
-      <Filter>Header Files\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\gift.hpp">
-      <Filter>Header Files\Models</Filter>
-    </ClInclude>
     <ClInclude Include="Models\tree.hpp">
       <Filter>Header Files\Models</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Shaders\fragment.frag">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="Shaders\vertex.vert">
-      <Filter>Resource Files</Filter>
-    </None>
+    <ClInclude Include="Headers\Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
