@@ -1,8 +1,20 @@
 #include "../Headers/Application.h"
+#include "../Headers/FileLoader.h"
+#include "../Models/tree.hpp"
 
 Scene* Application::getScene()
 {
-	return this->scene;
+	return this->activeScene;
+}
+
+void Application::setScene(int sceneNumber)
+{
+	if(sceneNumber < 0 || sceneNumber >= this->scenes.size())
+	{
+		std::cout << "Scene doesn't exist" << std::endl;
+		return;
+	}
+	this->activeScene = this->scenes[sceneNumber];
 }
 
 void Application::initialization()
@@ -43,11 +55,18 @@ void Application::initialization()
 	glLoadIdentity();
 	//glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
 	glEnable(GL_DEPTH_TEST);
+
+	this->scenes.push_back(new Scene());
+	this->scenes[0]->makeScene();
+	this->scenes.push_back(new Scene());
+	this->scenes[1]->makeScene2();
+	this->scenes.push_back(new Scene());
+	this->scenes[2]->makeScene3();
 }
 
 void Application::run()
 {
-	this->scene= new Scene();
+	this->activeScene = this->scenes[0];
 	glfwSetKeyCallback(window, Callback::key_callback);
 	glfwSetCursorPosCallback(window, Callback::cursor_callback);
 	glfwSetMouseButtonCallback(window, Callback::button_callback);
@@ -58,7 +77,7 @@ void Application::run()
 	while (!glfwWindowShouldClose(window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		scene->render();		
+		this->activeScene->render();		
 		// update other events like input handling
 		glfwPollEvents();
 		// put the stuff we’ve been drawing onto the display

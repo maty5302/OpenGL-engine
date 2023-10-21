@@ -20,6 +20,7 @@ void Callback::key_callback(GLFWwindow* window, int key, int scancode, int actio
 			a += c->getTarget() * c->getSpeed();
 			c->setEye(a);
 			app->getScene()->getCamera()->notify();
+			app->getScene()->notifyLights();
 		}
 		if (key == GLFW_KEY_S && (action == GLFW_PRESS || action == 2))
 		{
@@ -27,6 +28,7 @@ void Callback::key_callback(GLFWwindow* window, int key, int scancode, int actio
 			a -= c->getTarget() * c->getSpeed();
 			c->setEye(a);
 			app->getScene()->getCamera()->notify();
+			app->getScene()->notifyLights();
 		}
 		if (key == GLFW_KEY_A && (action == GLFW_PRESS || action == 2))
 		{
@@ -35,6 +37,7 @@ void Callback::key_callback(GLFWwindow* window, int key, int scancode, int actio
 			a -= b * c->getSpeed();
 			c->setEye(a);
 			app->getScene()->getCamera()->notify();
+			app->getScene()->notifyLights();
 		}
 		if (key == GLFW_KEY_D && (action == GLFW_PRESS || action == 2))
 		{
@@ -43,6 +46,19 @@ void Callback::key_callback(GLFWwindow* window, int key, int scancode, int actio
 			a += b * c->getSpeed();
 			c->setEye(a);
 			app->getScene()->getCamera()->notify();
+			app->getScene()->notifyLights();
+		}
+		if (key == GLFW_KEY_1 && action == GLFW_PRESS)
+		{
+			app->setScene(0);
+		}
+		if (key == GLFW_KEY_2 && action == GLFW_PRESS)
+		{
+			app->setScene(1);
+		}
+		if (key == GLFW_KEY_3 && action == GLFW_PRESS)
+		{
+			app->setScene(2);
 		}
 	}
 	
@@ -89,6 +105,7 @@ void Callback::cursor_callback(GLFWwindow* window, double x, double y)
 		front.z = sin(glm::radians(c->yaw)) * cos(glm::radians(c->pitch));
 		c->setTarget(glm::normalize(front));
 		app->getScene()->getCamera()->notify();
+		app->getScene()->notifyLights();
 	}
 	printf("cursor_callback [%f,%f]\n",x,y);
 }

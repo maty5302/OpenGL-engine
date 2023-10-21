@@ -10,16 +10,19 @@
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <vector>
 #include "../Headers/Scene.h"
 #include "../Headers/Callback.h"
 class Application
 {
 private:
+	std::vector<Scene*> scenes;
 	GLFWwindow* window;	
-	Scene* scene;
+	Scene* activeScene;
 public:
 	float lastX = 400, lastY = 300;
 	Scene* getScene();
+	void setScene(int sceneNumber);
 	void initialization();
 	void run();
 	Application();

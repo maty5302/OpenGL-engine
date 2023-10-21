@@ -1,6 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
-#include "Headers/Observer/Subject.h"
+#include "../Headers/Observer/Subject.h"
 class Light : public Subject
 {
 private:

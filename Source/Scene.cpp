@@ -4,19 +4,35 @@
 #include "../Headers/Transformation/Rotation.h"
 #include "../Headers/Transformation/Translation.h"
 #include "../Headers/Transformation/Scale.h"
+#include "../Headers/Light.h"
 #include "../Models/sphere.hpp";
 #include "../Models/suzi_smooth.hpp";
 #include "../Models/suzi_flat.hpp";
+#include "../Models/tree.hpp";
+
+void Scene::attachObservers()
+{
+	for (auto light : this->lights)
+		for (auto observer : this->shaders)
+			light->addObserver(observer);
+	this->notifyLights();
+}
 
 Scene::Scene()
 {
-	this->camera = new Camera(); //make camera in application
-	this->makeScene();
+	this->camera = new Camera();
+	this->lights = std::vector<Light*>();
+	this->models = std::vector<RenderModel*>();
 }
 
 Scene::~Scene()
 {
 	delete this->camera;
+
+	for (auto model : this->models)
+		delete model;
+	for(auto light : this->lights)
+		delete light;
 }
 
 Camera* Scene::getCamera()
@@ -24,80 +40,97 @@ Camera* Scene::getCamera()
 	return this->camera;
 }
 
+void Scene::notifyLights()
+{
+	for (auto light : this->lights)
+		light->notify();
+}
+
 void Scene::makeScene()
 {
 	//Scene 4 spheres and light in the middle of them
-	Shader* shader = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexConstant.vert").c_str(), FileLoader::loadShader("Shaders/fragmentConstant.frag").c_str());
-	Shader* shader2 = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentLambert.frag").c_str());
-	Shader* shader3 = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentPhong.frag").c_str());
+	this->lights.push_back(new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f), 0.5f));
+	Shader* shader = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentBlinn.frag").c_str());
+	Shader* shader2 = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentBlinn.frag").c_str());
+	Shader* shader3 = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentBlinn.frag").c_str());
 	Shader* shader4 = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentBlinn.frag").c_str());
-	this->addModel(new RenderModel(sphere, 17280, shader));
+	this->shaders.push_back(shader);
+	this->shaders.push_back(shader2);
+	this->shaders.push_back(shader3);
+	this->shaders.push_back(shader4);
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), shader), shader);
 	this->models[0]->addTransformation(new Scale(glm::vec3(0.7f)));
 	this->models[0]->addTransformation(new Translation(glm::vec3(-2.5f, 0.0f, 0.0f)));
 	this->models[0]->applyTransformations();
-	this->addModel(new RenderModel(sphere, 17280, shader2));
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), shader2), shader2);
 	this->models[1]->addTransformation(new Scale(glm::vec3(0.7f)));
 	this->models[1]->addTransformation(new Translation(glm::vec3(0.0f, 2.5f, 0.0f)));
 	this->models[1]->applyTransformations();
-	this->addModel(new RenderModel(sphere, 17280, shader3));
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), shader3), shader3);
 	this->models[2]->addTransformation(new Scale(glm::vec3(0.7f)));
 	this->models[2]->addTransformation(new Translation(glm::vec3(2.5f, 0.0f, 0.0f)));
 	this->models[2]->applyTransformations();
-	this->addModel(new RenderModel(sphere, 17280, shader4));
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), shader4), shader4);
 	this->models[3]->addTransformation(new Scale(glm::vec3(0.7f)));
 	this->models[3]->addTransformation(new Translation(glm::vec3(0.0f, -2.5f, 0.0f)));
 	this->models[3]->applyTransformations();
-	this->camera->addShader(shader);
-	this->camera->addShader(shader2);
-	this->camera->addShader(shader3);
-	this->camera->addShader(shader4);
+	this->attachObservers();
 }
+
 
 void Scene::makeScene2()
 {
 	//Scene one object between light and camera //needs to be fixed and add light
-	Shader* shader2 = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentPhong.frag").c_str());
-	this->addModel(new RenderModel(sphere, 17280, shader2));
+	this->lights.push_back(new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f), 0.5f));
+	this->shaders.push_back(new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentBlinn.frag").c_str()));
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[0]), this->shaders[0]);
 	this->models[0]->addTransformation(new Scale(glm::vec3(0.2f)));
 	this->models[0]->addTransformation(new Translation(glm::vec3(0.0f, -2.0f, 2.0f)));
 	this->models[0]->applyTransformations();
-	this->camera->addShader(shader2);
+	this->attachObservers();	
 }
 
 void Scene::makeScene3()
 {
 	//Scene objects with different shaders, constant, lambert and phong //todo add light and blinn-phong shader
-	Shader* shader = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexConstant.vert").c_str(), FileLoader::loadShader("Shaders/fragmentConstant.frag").c_str());
-	Shader* shader2 = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentLambert.frag").c_str());
-	Shader* shader3 = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentPhong.frag").c_str());
+	this->lights.push_back(new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f), 0.5f));
 
-	this->addModel(new RenderModel(sphere, 17280, shader));
-	this->addModel(new RenderModel(suziFlat, 17424, shader2));
-	this->addModel(new RenderModel(suziSmooth, 17424, shader3));
+	this->shaders.push_back(new Shader(this->camera, FileLoader::loadShader("Shaders/vertexConstant.vert").c_str(), FileLoader::loadShader("Shaders/fragmentConstant.frag").c_str()));
+	this->shaders.push_back(new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentLambert.frag").c_str()));
+	this->shaders.push_back(new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentPhong.frag").c_str()));
+	this->shaders.push_back(new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentBlinn.frag").c_str()));
+
+	this->addModel(new RenderModel(tree, sizeof(tree) / sizeof(float), this->shaders[0]), this->shaders[0]);
+	this->addModel(new RenderModel(suziFlat, sizeof(suziFlat) / sizeof(float), this->shaders[1]), this->shaders[1]);
+	this->addModel(new RenderModel(suziSmooth, sizeof(suziSmooth) / sizeof(float), this->shaders[2]), this->shaders[2]);
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[3]), this->shaders[3]);
 
 	for(RenderModel* model : this->models)
 		model->addTransformation(new Scale(glm::vec3(0.7f)));
 
+
 	this->models[0]->addTransformation(new Translation(glm::vec3(-2.5f, 2.5f, 0.0f)));
 	this->models[1]->addTransformation(new Translation(glm::vec3(2.5f, 2.5f, 0.0f)));
 	this->models[2]->addTransformation(new Translation(glm::vec3( - 2.5f, -2.5f, 0.0f)));
+	this->models[3]->addTransformation(new Translation(glm::vec3(2.5f, -2.5f, 0.0f)));
+
+
+	this->models[0]->addTransformation(new Scale(glm::vec3(0.3f)));
 
 	for(RenderModel* model : this->models)
 		model->applyTransformations();
 
-	this->camera->addShader(shader);
-	this->camera->addShader(shader2);
-	this->camera->addShader(shader3);
+	this->attachObservers();
 }
 
-//this is now bullshit
-void Scene::addModel(RenderModel* model)
+void Scene::addModel(RenderModel* model, Shader* shader)
 {
 	this->models.push_back(model);
+	this->camera->addObserver(shader);
 }
 
 void Scene::render()
 {
-	for (auto model : models)
+	for (auto model : this->models)
 		model->render();
 }

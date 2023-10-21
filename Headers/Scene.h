@@ -13,15 +13,20 @@ class Scene
 {
 private:
 	std::vector<RenderModel*> models;
+	std::vector<Light*> lights;
+	std::vector<Shader*> shaders;
 	Camera* camera;
+
+	void attachObservers();
 public:	
 	Scene();
 	~Scene();
 	Camera* getCamera();
+	void notifyLights();
 	void makeScene();
 	void makeScene2();
 	void makeScene3();
-	void addModel(RenderModel* model);
+	void addModel(RenderModel* model, Shader* shader);
 	void render();
 };
 

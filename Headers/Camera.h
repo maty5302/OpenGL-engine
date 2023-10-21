@@ -13,7 +13,6 @@ class Shader;
 class Camera : public Subject 
 {
 private:
-	Subject subject;
 	glm::vec3 eye;
 	glm::vec3 target;
 	glm::vec3 up;

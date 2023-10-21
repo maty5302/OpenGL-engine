@@ -1,4 +1,4 @@
-#include "Light.h"
+#include "../Headers/Light.h"
 
 Light::Light(glm::vec3 pos, glm::vec3 color, float intensity)
 {
