@@ -8,6 +8,7 @@ private:
 public:
 	Subject();
 	~Subject();
+	std::vector<Observer*> getObservers();
 	void addObserver(Observer* observer);
 	virtual void notify();
 };

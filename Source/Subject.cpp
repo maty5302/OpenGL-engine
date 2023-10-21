@@ -13,6 +13,11 @@ Subject::~Subject()
 	}
 }
 
+std::vector<Observer*> Subject::getObservers()
+{
+	return this->observers;
+}
+
 void Subject::addObserver(Observer* observer)
 {
 	this->observers.push_back(observer);
@@ -20,8 +25,4 @@ void Subject::addObserver(Observer* observer)
 
 void Subject::notify()
 {
-	for (auto observer : this->observers)
-	{
-		observer->update();
-	}
 }
