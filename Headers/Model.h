@@ -18,6 +18,7 @@ private:
 	std::vector<float> points;
 public:
 	Model(const float points[], int pointsCount);
+	~Model();
 	void useModel();
 	int getVertexCount();
 	int getRowCount();

@@ -7,6 +7,8 @@ TransformationComposite::TransformationComposite()
 
 TransformationComposite::~TransformationComposite()
 {
+	for(auto transformation : this->transformations)
+		delete transformation;
 }
 
 void TransformationComposite::addTransformation(Transformation* transformation)

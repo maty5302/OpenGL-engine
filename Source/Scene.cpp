@@ -33,6 +33,8 @@ Scene::~Scene()
 		delete model;
 	for(auto light : this->lights)
 		delete light;
+	for(auto shader : this->shaders)
+		delete shader;
 }
 
 Camera* Scene::getCamera()
@@ -50,27 +52,23 @@ void Scene::makeScene()
 {
 	//Scene 4 spheres and light in the middle of them
 	this->lights.push_back(new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f), 0.5f));
-	Shader* shader = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentBlinn.frag").c_str());
-	Shader* shader2 = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentBlinn.frag").c_str());
-	Shader* shader3 = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentBlinn.frag").c_str());
-	Shader* shader4 = new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentBlinn.frag").c_str());
-	this->shaders.push_back(shader);
-	this->shaders.push_back(shader2);
-	this->shaders.push_back(shader3);
-	this->shaders.push_back(shader4);
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), shader), shader);
+	this->shaders.push_back(new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentBlinn.frag").c_str()));
+	this->shaders.push_back(new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentBlinn.frag").c_str()));
+	this->shaders.push_back(new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentBlinn.frag").c_str()));
+	this->shaders.push_back(new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentBlinn.frag").c_str()));
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[0]), this->shaders[0]);
 	this->models[0]->addTransformation(new Scale(glm::vec3(0.7f)));
 	this->models[0]->addTransformation(new Translation(glm::vec3(-2.5f, 0.0f, 0.0f)));
 	this->models[0]->applyTransformations();
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), shader2), shader2);
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[1]), this->shaders[1]);
 	this->models[1]->addTransformation(new Scale(glm::vec3(0.7f)));
 	this->models[1]->addTransformation(new Translation(glm::vec3(0.0f, 2.5f, 0.0f)));
 	this->models[1]->applyTransformations();
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), shader3), shader3);
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[2]), this->shaders[2]);
 	this->models[2]->addTransformation(new Scale(glm::vec3(0.7f)));
 	this->models[2]->addTransformation(new Translation(glm::vec3(2.5f, 0.0f, 0.0f)));
 	this->models[2]->applyTransformations();
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), shader4), shader4);
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[3]), this->shaders[3]);
 	this->models[3]->addTransformation(new Scale(glm::vec3(0.7f)));
 	this->models[3]->addTransformation(new Translation(glm::vec3(0.0f, -2.5f, 0.0f)));
 	this->models[3]->applyTransformations();

@@ -38,7 +38,6 @@ public:
 	void setEye(glm::vec3 eye);
 	void setTarget(glm::vec3 target);
 
-	void addShader(Shader* shader);
 	void notify() override;
 };
 

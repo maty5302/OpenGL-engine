@@ -93,6 +93,11 @@ Application::~Application()
 {
 	glfwDestroyWindow(window);
 	glfwTerminate();
+
+	delete this->activeScene;
+	for (auto scene : this->scenes)
+		delete scene;
+
 	exit(EXIT_SUCCESS);
 }
 

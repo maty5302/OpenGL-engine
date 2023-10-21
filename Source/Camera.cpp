@@ -63,11 +63,6 @@ glm::mat4 Camera::getProjectionMatrix()
     return this->projectionMatrix;
 }
 
-void Camera::addShader(Shader* shader)
-{   
-    this->addObserver(shader);
-}
-
 void Camera::notify()
 {
     for (auto observer : this->getObservers())

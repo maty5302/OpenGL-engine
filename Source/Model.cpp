@@ -26,6 +26,14 @@ Model::Model(const float pointss[], int pointsCount)
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float)*6, (GLvoid*)(3*sizeof(float)));
 }
 
+Model::~Model()
+{
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	for(auto i : this->points)
+		delete &i;
+}
+
 void Model::useModel()
 {
 	glBindVertexArray(VAO);
