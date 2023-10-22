@@ -82,8 +82,8 @@ void Scene::makeScene2()
 	this->lights.push_back(new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f), 0.5f));
 	this->shaders.push_back(new Shader(this->camera, FileLoader::loadShader("Shaders/vertexlights.vert").c_str(), FileLoader::loadShader("Shaders/fragmentBlinn.frag").c_str()));
 	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[0]), this->shaders[0]);
-	this->models[0]->addTransformation(new Scale(glm::vec3(0.2f)));
-	this->models[0]->addTransformation(new Translation(glm::vec3(0.0f, -2.0f, 2.0f)));
+	this->models[0]->addTransformation(new Scale(glm::vec3(0.3f)));
+	this->models[0]->addTransformation(new Translation(glm::vec3(0.0f, 0.0f, 4.0f)));
 	this->models[0]->applyTransformations();
 	this->attachObservers();	
 }
