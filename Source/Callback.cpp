@@ -1,6 +1,8 @@
 #include "../Headers/Callback.h"
 #include "../Headers/Camera.h"
 
+bool Callback::isMouseButtonPressed = false;
+
 void Callback::error_callback(int error, const char* description)
 {
 	fputs(description, stderr);
@@ -19,7 +21,6 @@ void Callback::key_callback(GLFWwindow* window, int key, int scancode, int actio
 			glm::vec3 a = c->getEye();
 			a += c->getTarget() * c->getSpeed();
 			c->setEye(a);
-			app->getScene()->getCamera()->notify();
 			app->getScene()->notifyLights();
 		}
 		if (key == GLFW_KEY_S && (action == GLFW_PRESS || action == 2))
@@ -27,7 +28,6 @@ void Callback::key_callback(GLFWwindow* window, int key, int scancode, int actio
 			glm::vec3 a = c->getEye();
 			a -= c->getTarget() * c->getSpeed();
 			c->setEye(a);
-			app->getScene()->getCamera()->notify();
 			app->getScene()->notifyLights();
 		}
 		if (key == GLFW_KEY_A && (action == GLFW_PRESS || action == 2))
@@ -36,7 +36,6 @@ void Callback::key_callback(GLFWwindow* window, int key, int scancode, int actio
 			glm::vec3 b = glm::cross(c->getTarget(), c->getUp());
 			a -= b * c->getSpeed();
 			c->setEye(a);
-			app->getScene()->getCamera()->notify();
 			app->getScene()->notifyLights();
 		}
 		if (key == GLFW_KEY_D && (action == GLFW_PRESS || action == 2))
@@ -45,7 +44,6 @@ void Callback::key_callback(GLFWwindow* window, int key, int scancode, int actio
 			glm::vec3 b = glm::cross(c->getTarget(), c->getUp());
 			a += b * c->getSpeed();
 			c->setEye(a);
-			app->getScene()->getCamera()->notify();
 			app->getScene()->notifyLights();
 		}
 		if (key == GLFW_KEY_1 && action == GLFW_PRESS)
@@ -59,6 +57,14 @@ void Callback::key_callback(GLFWwindow* window, int key, int scancode, int actio
 		if (key == GLFW_KEY_3 && action == GLFW_PRESS)
 		{
 			app->setScene(2);
+		}
+		if (key == GLFW_KEY_4 && action == GLFW_PRESS)
+		{
+			//app->setScene(3);
+		}
+		if (key == GLFW_KEY_5 && action == GLFW_PRESS)
+		{
+			app->setScene(4);
 		}
 	}
 	
@@ -77,14 +83,16 @@ void Callback::window_iconify_callback(GLFWwindow* window, int iconified)
 
 void Callback::window_size_callback(GLFWwindow* window, int width, int height)
 {
+	Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
 	printf("resize %d, %d \n", width, height);
+	app->getScene()->getCamera()->setWindowSize(width, height);
 	glViewport(0, 0, width, height);
 }
 
 void Callback::cursor_callback(GLFWwindow* window, double x, double y)
 {
 	Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
-	if (app)
+	if (app && isMouseButtonPressed)
 	{
 		Camera* c = app->getScene()->getCamera();
 		float xoffset = x - app->lastX;
@@ -104,7 +112,6 @@ void Callback::cursor_callback(GLFWwindow* window, double x, double y)
 		front.y = sin(glm::radians(c->pitch));
 		front.z = sin(glm::radians(c->yaw)) * cos(glm::radians(c->pitch));
 		c->setTarget(glm::normalize(front));
-		app->getScene()->getCamera()->notify();
 		app->getScene()->notifyLights();
 	}
 	printf("cursor_callback [%f,%f]\n",x,y);
@@ -114,5 +121,14 @@ void Callback::button_callback(GLFWwindow* window, int button, int action, int m
 {
 	if (action == GLFW_PRESS) {
 		printf("button_callback [%d,%d,%d]\n", button, action, mode);
+	}
+	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS){
+		isMouseButtonPressed = !isMouseButtonPressed;
+		if (isMouseButtonPressed) {
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // Lock and hide the cursor
+		}
+		else {
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); // Release the cursor
+		}
 	}
 }
