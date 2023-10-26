@@ -37,6 +37,7 @@ public:
 	float getSpeed();
 	void setEye(glm::vec3 eye);
 	void setTarget(glm::vec3 target);
+	void setWindowSize(int width, int height);
 
 	void notify() override;
 };

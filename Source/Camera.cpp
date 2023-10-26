@@ -11,7 +11,7 @@ Camera::Camera()
     this->yaw = -90.0f;
     this->pitch = 0.0f;
     this->sensitivity = 0.05f;
-    this->speed = 0.05f;
+    this->speed = 0.1f;
 }
 
 Camera::~Camera()
@@ -46,11 +46,19 @@ float Camera::getSpeed()
 void Camera::setEye(glm::vec3 eye)
 {
     this->eye = eye;
+    this->notify(); 
 }
 
 void Camera::setTarget(glm::vec3 target)
 {
     this->target = target;
+    this->notify();
+}
+
+void Camera::setWindowSize(int width, int height)
+{
+    this->projectionMatrix = glm::perspective(glm::radians(this->fov), (float)width / (float)height, 0.1f, 100.0f);
+    this->notify();
 }
 
 glm::mat4 Camera::getViewMatrix()
