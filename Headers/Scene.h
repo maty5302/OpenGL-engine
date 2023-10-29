@@ -16,17 +16,22 @@ private:
 	std::vector<Light*> lights;
 	std::vector<Shader*> shaders;
 	Camera* camera;
-
+	bool animated = false;
+	float delta= 0.0f;
 	void attachObservers();
 public:	
 	Scene();
 	~Scene();
 	Camera* getCamera();
 	void notifyLights();
-	void makeScene();
-	void makeScene2();
-	void makeScene3();
+	void makeSceneTrees();
+	void makeScenePhong();
+	void makeSceneLights();
+	void makeSceneResizeTest();
+	void makeScenePlanets();	
 	void addModel(RenderModel* model, Shader* shader);
 	void render();
+	void animate();
+	bool isAnimated();
 };
 
