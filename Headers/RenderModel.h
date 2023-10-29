@@ -13,14 +13,17 @@
 #include "../Headers/Shader.h"
 #include "../Headers/Transformation/Transformation.h"
 #include "../Headers/Transformation/TransformationComposite.h"
+#include "../Headers/Material.h"
 class RenderModel
 {
 private: 
 	Model* model;
 	Shader* shader;
 	TransformationComposite* transform;
+	Material* material;
 public:
-	RenderModel(const float points[], int pointsCount,Shader* shader);
+	RenderModel(Model* model, Shader* shader, Material* material);
+	RenderModel(const float points[], int pointsCount, Shader* shader, Material* material); 
 	void applyTransformations();
 	void addTransformation(Transformation* transformation);
 	void removeTransformation(Transformation* transformation);

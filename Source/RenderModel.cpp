@@ -1,7 +1,23 @@
 #include "../Headers/RenderModel.h"
 #include "../Headers/Transformation/TransformationComposite.h"
 
-RenderModel::RenderModel(const float points[], int pointsCount,Shader* shader)
+RenderModel::RenderModel(Model* model, Shader* shader, Material* material)
+{
+	glm::mat4 defaulfM = glm::mat4(1.0f);
+	this->model = model;
+	this->shader = shader;
+	this->transform = new TransformationComposite();
+	this->shader->useShader();
+	this->shader->setMatrixModel(defaulfM);
+	this->material = material;
+	this->shader->setUniform("objectColor", this->material->getColor());
+	this->shader->setUniform("shininess", this->material->getShininess());
+	this->shader->setUniform("specularStrength", this->material->getSpecular());
+	this->shader->setUniform("ambientStrength", this->material->getAmbient());
+
+}
+
+RenderModel::RenderModel(const float points[], int pointsCount, Shader* shader, Material* material)
 {
 	glm::mat4 defaulfM = glm::mat4(1.0f);
 	this->model = new Model(points, pointsCount);
@@ -9,6 +25,11 @@ RenderModel::RenderModel(const float points[], int pointsCount,Shader* shader)
 	this->transform = new TransformationComposite();
 	this->shader->useShader();
 	this->shader->setMatrixModel(defaulfM);
+	this->material = material;
+	this->shader->setUniform("objectColor", this->material->getColor());
+	this->shader->setUniform("shininess", this->material->getShininess());
+	this->shader->setUniform("specularStrength", this->material->getSpecular());
+	this->shader->setUniform("ambientStrength", this->material->getAmbient());
 }
 
 void RenderModel::applyTransformations()
@@ -38,4 +59,5 @@ RenderModel::~RenderModel()
 	delete model;
 	delete shader;
 	delete transform;
+	delete material;
 }

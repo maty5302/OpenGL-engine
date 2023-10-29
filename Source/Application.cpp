@@ -33,7 +33,7 @@ void Application::initialization()
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1); 
 	glfwSetWindowUserPointer(window, this);
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(window, GLFW_CURSOR,GLFW_CURSOR_NORMAL);
 
 	glewExperimental = GL_TRUE;
 	glewInit();
@@ -57,16 +57,21 @@ void Application::initialization()
 	glEnable(GL_DEPTH_TEST);
 
 	this->scenes.push_back(new Scene());
-	this->scenes[0]->makeScene();
+	this->scenes[0]->makeScenePhong();
 	this->scenes.push_back(new Scene());
-	this->scenes[1]->makeScene2();
+	this->scenes[1]->makeScenePlanets();
 	this->scenes.push_back(new Scene());
-	this->scenes[2]->makeScene3();
+	this->scenes[2]->makeSceneLights();
+	this->scenes.push_back(new Scene());
+	this->scenes[3]->makeSceneResizeTest();
+	this->scenes.push_back(new Scene());
+	this->scenes[4]->makeSceneTrees();
+
 }
 
 void Application::run()
 {
-	this->activeScene = this->scenes[0];
+	this->activeScene = this->scenes[1];
 	glfwSetKeyCallback(window, Callback::key_callback);
 	glfwSetCursorPosCallback(window, Callback::cursor_callback);
 	glfwSetMouseButtonCallback(window, Callback::button_callback);
@@ -77,7 +82,10 @@ void Application::run()
 	while (!glfwWindowShouldClose(window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		this->activeScene->render();		
+		
+		this->activeScene->render();
+		if(this->activeScene->isAnimated())
+			this->activeScene->animate();
 		// update other events like input handling
 		glfwPollEvents();
 		// put the stuff we’ve been drawing onto the display

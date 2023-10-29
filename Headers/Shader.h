@@ -17,16 +17,22 @@ class Camera;
 class Shader : public Observer
 {
 private:
+	const char* vertex_shader;
+	const char* fragment_shader;
 	Camera *camera;
 	GLuint vertex_Shader;
 	GLuint fragment_Shader;
 	GLuint shader_Program;
 
 public:
-	Shader(Camera* camera, const char* vertex_shaderr, const char* fragment_shaderr);
+	Shader(Camera* camera, const char* path_vertex_shader, const char* path_fragment_shader);
 	void update(Subject* s) override;
+	void setUniform(const char* name, glm::vec4 value);
+	void setUniform(const char* name, glm::vec3 value);
+	void setUniform(const char* name, glm::mat4 value);
+	void setUniform(const char* name, float value);
 	void useShader();
+	void cancelShader();
 	void setMatrixModel(glm::mat4 modelMatrix);
 	~Shader();
 };
-

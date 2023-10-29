@@ -75,6 +75,9 @@
     <ClCompile Include="Source\Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\fragment.frag">
@@ -99,6 +102,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Shaders\fragmentBlinn.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\fragmentPhongWrong.frag">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
@@ -170,6 +176,9 @@
       <Filter>Header Files\Models</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
