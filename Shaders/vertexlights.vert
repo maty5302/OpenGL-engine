@@ -8,7 +8,6 @@ uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 void main() {
 gl_Position = (projectionMatrix * viewMatrix * modelMatrix) * vec4 (position, 1.0);
-mat4 normal=transpose(inverse(modelMatrix));
 ex_worldPosition = vec3 (modelMatrix * vec4(position,1.0f));
-ex_worldNormal = vec3(normal * vec4(normalposition,1.0f));
+ex_worldNormal = normalize(transpose(inverse(mat3(modelMatrix))) * normalposition);
 }
