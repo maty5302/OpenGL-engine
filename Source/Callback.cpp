@@ -60,7 +60,7 @@ void Callback::key_callback(GLFWwindow* window, int key, int scancode, int actio
 		}
 		if (key == GLFW_KEY_4 && action == GLFW_PRESS)
 		{
-			//app->setScene(3);
+			app->setScene(3);
 		}
 		if (key == GLFW_KEY_5 && action == GLFW_PRESS)
 		{

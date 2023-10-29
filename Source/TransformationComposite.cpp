@@ -23,18 +23,14 @@ void TransformationComposite::removeTransformation(Transformation* transformatio
 
 void TransformationComposite::compute()
 {
-	for (size_t i = 0; i < this->transformations.size(); i++)
-	{
-		this->transformations[i]->compute();
-	}
+	for (auto transformation : this->transformations)
+		transformation->compute();
 }
 
 glm::mat4 TransformationComposite::getModelMatrix()
 {
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
-	for (size_t i = 0; i < this->transformations.size(); i++)
-	{
-		modelMatrix *= this->transformations[i]->getModelMatrix();
-	}
+	for (auto transformation : this->transformations)
+		modelMatrix *= transformation->getModelMatrix();
 	return modelMatrix;
 }
