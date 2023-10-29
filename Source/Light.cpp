@@ -1,10 +1,10 @@
 #include "../Headers/Light.h"
 
-Light::Light(glm::vec3 pos, glm::vec3 color, float intensity)
+Light::Light(glm::vec3 pos, glm::vec3 color, float attenuation)
 {
 	this->position = pos;
 	this->color = color;
-	this->intensity = intensity;
+	this->attenuation = attenuation;
 }
 
 Light::~Light()
@@ -33,7 +33,7 @@ glm::vec3 Light::getColor()
 	return this->color;
 }
 
-float Light::getIntensity()
+float Light::getAttenuation()
 {
-	return this->intensity;
+	return this->attenuation;
 }
