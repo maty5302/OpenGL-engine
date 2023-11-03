@@ -57,15 +57,16 @@ void Scene::makeSceneTrees()
 {
 	this->animated = false;
 	srand(time(NULL));
+	this->lights.push_back(new Light(glm::vec3(0.0f, 20.f, 0.0f), glm::vec3(1.0f)));
 	this->camera->setEye(glm::vec3(0.0f, 5.0f, -10.0f));
 	this->camera->setTarget(glm::vec3(0.0f, 0.0f, -1.0f));
 	Model* model_tree = new Model(tree, sizeof(tree) / sizeof(float));
 	Model* model_bushes = new Model(bushes, sizeof(bushes) / sizeof(float));
-	Material* m = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.09f, 0.77f, 0.09f, 1.0f));
+	Material* m = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1.f), 32.0f, glm::vec4(0.09f, 0.77f, 0.09f, 1.0f));
 	Material* m_plain = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.0f, 0.5f, 0.0f, 1.0f));
 	for (size_t i = 0; i < 275; i++)
 	{
-		this->shaders.push_back(new Shader(this->camera, "Shaders/vertexConstant.vert", "Shaders/fragmentConstant.frag"));
+		this->shaders.push_back(new Shader(this->camera, "Shaders/vertexlights.vert", "Shaders/fragmentPhong.frag"));
 		this->addModel(new RenderModel(model_tree, this->shaders[i],m), this->shaders[i]);
 		this->models[i]->addTransformation(new Rotation(rand() % 360,glm::vec3(0.0f, 1.0f, 0.0f)));
 		this->models[i]->addTransformation(new Scale(glm::vec3(rand() % 10 / 10.0f + 0.5f)));
@@ -76,7 +77,7 @@ void Scene::makeSceneTrees()
 	}
 	for (size_t i = 275; i < 295; i++)
 	{
-		this->shaders.push_back(new Shader(this->camera, "Shaders/vertexConstant.vert", "Shaders/fragmentConstant.frag"));
+		this->shaders.push_back(new Shader(this->camera, "Shaders/vertexlights.vert", "Shaders/fragmentPhong.frag"));
 		this->addModel(new RenderModel(model_bushes, this->shaders[i],m), this->shaders[i]);
 		this->models[i]->addTransformation(new Rotation(rand() % 360, glm::vec3(0.0f, 1.0f, 0.0f)));
 		this->models[i]->addTransformation(new Scale(glm::vec3(rand() % 10 / 10.0f + 1.5f)));
@@ -116,12 +117,14 @@ void Scene::makeScenePhong()
 	this->animated = false;
 	//Scene 4 spheres and light in the middle of them
 	Material* m = new Material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.385, 0.647, 0.812, 1.0));
-	this->lights.push_back(new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f), 0.5f));
+	Material* m2 = new Material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.385, 0.647, 0.812, 1.0));
+
+	this->lights.push_back(new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)));
 	this->shaders.push_back(new Shader(this->camera,"Shaders/vertexlights.vert", "Shaders/fragmentPhong.frag"));
 	this->shaders.push_back(new Shader(this->camera,"Shaders/vertexlights.vert", "Shaders/fragmentPhong.frag"));
 	this->shaders.push_back(new Shader(this->camera, "Shaders/vertexlights.vert", "Shaders/fragmentPhong.frag"));
 	this->shaders.push_back(new Shader(this->camera, "Shaders/vertexlights.vert", "Shaders/fragmentPhong.frag"));
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[0],m), this->shaders[0]);
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[0],m2), this->shaders[0]);
 	this->models[0]->addTransformation(new Scale(glm::vec3(0.7f)));
 	this->models[0]->addTransformation(new Translation(glm::vec3(-2.0f, 0.0f, 0.0f)));
 	this->models[0]->applyTransformations();
@@ -146,7 +149,7 @@ void Scene::makeSceneLights()
 	this->animated = false;
 	//Scene one object between light and camera //needs to be fixed and add light
 	Material* m = new Material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.5f), glm::vec3(0.5f), 1.0f, glm::vec4(0.09f, 0.73f, 0.09f, 1.0f));
-	this->lights.push_back(new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f), 0.5f));
+	this->lights.push_back(new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)));
 	this->shaders.push_back(new Shader(this->camera, "Shaders/vertexlights.vert","Shaders/fragmentPhong.frag"));
 	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[0],m), this->shaders[0]);
 	this->models[0]->addTransformation(new Scale(glm::vec3(0.3f)));
@@ -164,7 +167,7 @@ void Scene::makeSceneResizeTest()
 {
 	this->animated = false;
 	//Scene objects with different shaders, constant, lambert and phong //todo add light and blinn-phong shader
-	this->lights.push_back(new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f), 0.5f));
+	this->lights.push_back(new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)));
 	Material* m = new Material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.09f, 0.73f, 0.09f, 1.0f));
 	this->shaders.push_back(new Shader(this->camera, "Shaders/vertexConstant.vert","Shaders/fragmentConstant.frag"));
 	this->shaders.push_back(new Shader(this->camera, "Shaders/vertexlights.vert", "Shaders/fragmentLambert.frag"));
@@ -204,7 +207,7 @@ void Scene::makeScenePlanets()
 	Material* m4 = new Material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.83f, 0.29f, 0.15f, 1.0f));
 	Material* m5 = new Material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.89f, 0.67f, 0.58f, 1.0f));
 
-	this->lights.push_back(new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f), 0.5f));
+	this->lights.push_back(new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)));
 	this->shaders.push_back(new Shader(this->camera, "Shaders/vertexConstant.vert","Shaders/fragmentConstant.frag"));
 	this->shaders.push_back(new Shader(this->camera, "Shaders/vertexlights.vert", "Shaders/fragmentBlinn.frag"));
 	this->shaders.push_back(new Shader(this->camera, "Shaders/vertexlights.vert", "Shaders/fragmentBlinn.frag"));
@@ -246,7 +249,7 @@ void Scene::animate()
 
 	TransformationComposite* t_earth = new TransformationComposite();
 	t_earth->addTransformation(t_sun);
-	t_earth->addTransformation(new Rotation(delta, glm::vec3(0.0f, 1.0f, 0.0f)));
+	t_earth->addTransformation(new Rotation(-delta, glm::vec3(0.0f, 1.0f, 0.0f)));
 	t_earth->addTransformation(new Translation(glm::vec3(0.0f, 0.0f, 20.0f)));
 	this->models[1]->addTransformation(t_earth);
 

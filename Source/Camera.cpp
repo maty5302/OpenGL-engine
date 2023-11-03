@@ -6,7 +6,7 @@ Camera::Camera()
     this->eye = glm::vec3(0.0f, 0.0f, 3.0f);
     this->target = glm::vec3(0.0f, 0.0f, -1.0f);
     this->up = glm::vec3(0.0f, 1.0f, 0.0f);
-    this->fov = 90.f;
+    this->fov = 70.f;
     this->projectionMatrix = glm::perspective(glm::radians(this->fov), 4.0f / 3.0f, 0.1f, 100.0f);
     this->yaw = -90.0f;
     this->pitch = 0.0f;

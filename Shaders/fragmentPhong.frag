@@ -11,6 +11,8 @@ uniform vec4 objectColor;
 uniform float shininess;
 uniform vec3 specularStrength;
 uniform vec3 ambientStrength;
+uniform float attenuation;
+
 
 void main(void){
     vec3 lightVector = lightPosition - ex_worldPosition;
@@ -31,5 +33,5 @@ void main(void){
 
     vec4 ambient = vec4(ambientStrength, 1.0);
 
-    out_Color = (ambient + diffuse + specular)*objectColor;
+    out_Color = (ambient + diffuse + specular)*objectColor*attenuation;
 }

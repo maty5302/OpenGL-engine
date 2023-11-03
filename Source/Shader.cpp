@@ -51,9 +51,11 @@ void Shader::update(Subject* s)
 	{
 		GLint idLightPosition = glGetUniformLocation(this->shader_Program, "lightPosition");
 		GLint idLightColor = glGetUniformLocation(this->shader_Program, "lightColor");
+		GLint idLightAttenuation = glGetUniformLocation(this->shader_Program, "attenuation");
 		glUseProgram(this->shader_Program);
 		glUniform3f(idLightPosition, l->getPosition().x, l->getPosition().y, l->getPosition().z);
 		glUniform3f(idLightColor, l->getColor().x, l->getColor().y, l->getColor().z);
+		glUniform1f(idLightAttenuation, l->getAttenuation());
 	}
 }
 
