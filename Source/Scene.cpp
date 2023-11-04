@@ -4,7 +4,9 @@
 #include "../Headers/Transformation/Rotation.h"
 #include "../Headers/Transformation/Translation.h"
 #include "../Headers/Transformation/Scale.h"
-#include "../Headers/Light.h"
+#include "../Headers/Light/PointLight.h"
+#include "../Headers/Light/DirectionLight.h"
+#include "../Headers/Light/SpotLight.h"
 #include "../Models/sphere.hpp";
 #include "../Models/plain.hpp";
 #include "../Models/suzi_smooth.hpp";
@@ -49,21 +51,37 @@ Camera* Scene::getCamera()
 
 void Scene::notifyLights()
 {
+	int i = 0;
 	for (auto light : this->lights)
-		light->notify();
+	{
+		if (PointLight* l = dynamic_cast<PointLight*>(light))
+		{
+			light->notify(i);
+			i++;
+		}
+		else
+			light->notify();
+		
+	}		
 }
 
 void Scene::makeSceneTrees()
 {
 	this->animated = false;
 	srand(time(NULL));
-	this->lights.push_back(new Light(glm::vec3(0.0f, 20.f, 0.0f), glm::vec3(1.0f)));
-	this->camera->setEye(glm::vec3(0.0f, 5.0f, -10.0f));
+	
+	this->lights.push_back(new DirectionLight(glm::vec3(0.0, -1.0, 0.0), glm::vec3(1.0f)));
+	this->lights.push_back(new PointLight(glm::vec3(5.0f, 2.f, 0.0f), glm::vec3(1.0f)));
+	this->lights.push_back(new PointLight(glm::vec3(20.0f, 20.f, 0.0f), glm::vec3(1.0f)));
+	this->lights.push_back(new PointLight(glm::vec3(-20.0f, 20.f, 0.0f), glm::vec3(1.0f)));
+	this->lights.push_back(new PointLight(glm::vec3(0.0f, 20.f, 20.0f), glm::vec3(1.0f)));
+	this->lights.push_back(new SpotLight(this->camera->getEye(), glm::vec3(1.0f), this->camera->getTarget(), glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f))));
+	this->camera->setEye(glm::vec3(0.0f, 15.0f, -10.0f));
 	this->camera->setTarget(glm::vec3(0.0f, 0.0f, -1.0f));
 	Model* model_tree = new Model(tree, sizeof(tree) / sizeof(float));
 	Model* model_bushes = new Model(bushes, sizeof(bushes) / sizeof(float));
 	Material* m = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1.f), 32.0f, glm::vec4(0.09f, 0.77f, 0.09f, 1.0f));
-	Material* m_plain = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.0f, 0.5f, 0.0f, 1.0f));
+	Material* m_plain = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1.f), 32.0f, glm::vec4(0.0f, 0.5f, 0.0f, 1.0f));
 	for (size_t i = 0; i < 275; i++)
 	{
 		this->shaders.push_back(new Shader(this->camera, "Shaders/vertexlights.vert", "Shaders/fragmentPhong.frag"));
@@ -89,7 +107,7 @@ void Scene::makeSceneTrees()
 	Material* m_ball = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 	Material* m_suzi = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.0f, 0.5f, 1.0f, 1.0f));
 
-	this->shaders.push_back(new Shader(this->camera, "Shaders/vertexConstant.vert", "Shaders/fragmentConstant.frag"));
+	this->shaders.push_back(new Shader(this->camera, "Shaders/vertexlights.vert", "Shaders/fragmentPhong.frag"));
 	this->addModel(new RenderModel(plain, sizeof(plain) / sizeof(float), this->shaders[295],m_plain), this->shaders[295]);
 	this->models[295]->addTransformation(new Scale(glm::vec3(100.0f)));
 	this->models[295]->applyTransformations();
@@ -118,8 +136,11 @@ void Scene::makeScenePhong()
 	//Scene 4 spheres and light in the middle of them
 	Material* m = new Material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.385, 0.647, 0.812, 1.0));
 	Material* m2 = new Material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.385, 0.647, 0.812, 1.0));
-
-	this->lights.push_back(new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)));
+	
+	this->lights.push_back(new DirectionLight(glm::vec3(3.0, 2.0, 0.0), glm::vec3(1.0f)));
+	this->lights.push_back(new PointLight(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)));
+	this->lights.push_back(new PointLight(glm::vec3(0.0f, 3.0f, 0.0f), glm::vec3(1.0f)));
+	this->lights.push_back(new SpotLight(this->camera->getEye(), glm::vec3(1.0f), this->camera->getTarget(), glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f))));
 	this->shaders.push_back(new Shader(this->camera,"Shaders/vertexlights.vert", "Shaders/fragmentPhong.frag"));
 	this->shaders.push_back(new Shader(this->camera,"Shaders/vertexlights.vert", "Shaders/fragmentPhong.frag"));
 	this->shaders.push_back(new Shader(this->camera, "Shaders/vertexlights.vert", "Shaders/fragmentPhong.frag"));
@@ -146,28 +167,29 @@ void Scene::makeScenePhong()
 
 void Scene::makeSceneLights()
 {
+	//End of support 
 	this->animated = false;
-	//Scene one object between light and camera //needs to be fixed and add light
-	Material* m = new Material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.5f), glm::vec3(0.5f), 1.0f, glm::vec4(0.09f, 0.73f, 0.09f, 1.0f));
-	this->lights.push_back(new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)));
-	this->shaders.push_back(new Shader(this->camera, "Shaders/vertexlights.vert","Shaders/fragmentPhong.frag"));
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[0],m), this->shaders[0]);
-	this->models[0]->addTransformation(new Scale(glm::vec3(0.3f)));
-	this->models[0]->addTransformation(new Translation(glm::vec3(0.0f, 0.0f, 4.0f)));
-	this->models[0]->applyTransformations();
-	this->shaders.push_back(new Shader(this->camera, "Shaders/vertexlights.vert", "Shaders/fragmentPhongWrong.frag"));
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[1], m), this->shaders[1]);
-	this->models[1]->addTransformation(new Scale(glm::vec3(0.3f)));
-	this->models[1]->addTransformation(new Translation(glm::vec3(0.0f, 0.0f, -4.0f)));
-	this->models[1]->applyTransformations();
-	this->attachObservers();	
+	////Scene one object between light and camera //needs to be fixed and add light
+	//Material* m = new Material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.5f), glm::vec3(0.5f), 1.0f, glm::vec4(0.09f, 0.73f, 0.09f, 1.0f));
+	//this->lights.push_back(new PointLight(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)));
+	//this->shaders.push_back(new Shader(this->camera, "Shaders/vertexlights.vert","Shaders/fragmentPhong.frag"));
+	//this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[0],m), this->shaders[0]);
+	//this->models[0]->addTransformation(new Scale(glm::vec3(0.3f)));
+	//this->models[0]->addTransformation(new Translation(glm::vec3(0.0f, 0.0f, 4.0f)));
+	//this->models[0]->applyTransformations();
+	//this->shaders.push_back(new Shader(this->camera, "Shaders/vertexlights.vert", "Shaders/fragmentPhongWrong.frag"));
+	//this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[1], m), this->shaders[1]);
+	//this->models[1]->addTransformation(new Scale(glm::vec3(0.3f)));
+	//this->models[1]->addTransformation(new Translation(glm::vec3(0.0f, 0.0f, -4.0f)));
+	//this->models[1]->applyTransformations();
+	//this->attachObservers();	
 }
 
 void Scene::makeSceneResizeTest()
 {
 	this->animated = false;
 	//Scene objects with different shaders, constant, lambert and phong //todo add light and blinn-phong shader
-	this->lights.push_back(new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)));
+	this->lights.push_back(new PointLight(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)));
 	Material* m = new Material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.09f, 0.73f, 0.09f, 1.0f));
 	this->shaders.push_back(new Shader(this->camera, "Shaders/vertexConstant.vert","Shaders/fragmentConstant.frag"));
 	this->shaders.push_back(new Shader(this->camera, "Shaders/vertexlights.vert", "Shaders/fragmentLambert.frag"));
@@ -207,7 +229,7 @@ void Scene::makeScenePlanets()
 	Material* m4 = new Material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.83f, 0.29f, 0.15f, 1.0f));
 	Material* m5 = new Material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.89f, 0.67f, 0.58f, 1.0f));
 
-	this->lights.push_back(new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)));
+	this->lights.push_back(new DirectionLight(glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(1.0f)));
 	this->shaders.push_back(new Shader(this->camera, "Shaders/vertexConstant.vert","Shaders/fragmentConstant.frag"));
 	this->shaders.push_back(new Shader(this->camera, "Shaders/vertexlights.vert", "Shaders/fragmentBlinn.frag"));
 	this->shaders.push_back(new Shader(this->camera, "Shaders/vertexlights.vert", "Shaders/fragmentBlinn.frag"));

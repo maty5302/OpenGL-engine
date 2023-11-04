@@ -75,6 +75,10 @@ void Camera::notify()
 {
     for (auto observer : this->getObservers())
     {
-		observer->update(this);
+        observer->update("viewMatrix", this->getViewMatrix());
+        observer->update("projectionMatrix", this->getProjectionMatrix());
+        observer->update("cameraPosition", this->getEye());
+        observer->update("spotLight.position", this->getEye());
+        observer->update("spotLight.direction", this->getTarget());
 	}
 }

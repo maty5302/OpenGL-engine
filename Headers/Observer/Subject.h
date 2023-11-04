@@ -11,5 +11,6 @@ public:
 	std::vector<Observer*> getObservers();
 	void addObserver(Observer* observer);
 	virtual void notify();
+	virtual void notify(int id);
 };
 

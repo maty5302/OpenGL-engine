@@ -9,6 +9,7 @@
 #include <vector>
 #include "../Headers/RenderModel.h"
 #include "../Headers/Observer/Subject.h"
+#include "../Headers/Light/Light.h"
 class Scene
 {
 private:

@@ -1,32 +1,134 @@
 #version 330
+#define MAX_POINT_LIGHTS 4
 in vec3 ex_worldPosition;
 in vec3 ex_worldNormal;
 out vec4 out_Color;
 
 uniform vec3 cameraPosition;
-uniform vec3 lightPosition;
-uniform vec3 lightColor;
-
 uniform vec4 objectColor;
 uniform float shininess;
-uniform vec3 specularStrength;
-uniform vec3 ambientStrength;
-uniform float attenuation;
+
+struct Material{
+    vec4 objectColor;
+    float shininess;
+};
+
+struct SpotLight{
+    int isDefined;
+    vec3 position;
+    vec3 direction;
+    float cutOff;
+    float outerCutOff;
+    vec3 color;
+    float constant;
+    float linear;
+    float quadratic;
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+};
+
+struct DirLight{
+    int isDefined;
+    vec3 direction;
+    vec3 color;
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+};
+
+struct PointLight{
+	int isDefined;
+	vec3 position;
+	vec3 color;
+	float constant;
+	float linear;
+	float quadratic;
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+};
+
+float getAttenuation(float c, float l, float q, vec3 lightPos, vec3 worldPos)
+{
+    float d = length(lightPos - worldPos);
+    float att = 1.0 / (c + l * d + q * d * d);
+	return max(att, 0.0);
+}
+
+vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 cameraPos, Material material)
+{
+    float attenuation = getAttenuation(light.constant, light.linear, light.quadratic, light.position, fragPos);
+    
+	vec3 lightVector = normalize(light.position - fragPos);
+    float dot_product = max(dot(normalize(lightVector), normalize(normal)), 0.0);
+    vec3 diffuse = dot_product * light.diffuse * light.color;
+    vec3 viewDir = normalize(cameraPos - fragPos);
+    vec3 halfwayDir = normalize(lightVector + viewDir);    
+    float spec = pow(max(dot(normalize(normal), halfwayDir), 0.0), material.shininess);
+    vec3 specular = light.specular * spec * light.color;
+	    if(dot(normal, lightVector)< 0.0){
+            specular = vec3(0.0, 0.0, 0.0);
+        }
+
+    vec3 ambient = light.ambient * light.color;
+
+    return (ambient + diffuse + specular)*attenuation;
+}
+
+vec3 CalcDirLight(DirLight light, vec3 normal, Material material, vec3 cameraPos, vec3 fragPos)
+{
+    vec3 lightVector = normalize(-light.direction);
+    float dot_product = max(dot(normalize(normal), normalize(lightVector)), 0.0);
+    vec3 viewDir = normalize(cameraPos - fragPos);
+    vec3 halfwayDir = normalize(lightVector + viewDir);    
+    float spec = pow(max(dot(normalize(normal), halfwayDir), 0.0), material.shininess);
+    vec3 specular = light.specular * spec * light.color;
+    vec3 diffuse = dot_product * light.diffuse * light.color;
+    vec3 ambient = light.ambient * light.color;
+    return (ambient + diffuse+specular);
+}
+
+vec3 CalcSpotLight(SpotLight light, vec3 normal, Material material, vec3 cameraPos, vec3 fragPos)
+{
+	vec3 lightVector = normalize(light.position - fragPos);
+    float dot_product = max(dot(normalize(normal), normalize(lightVector)), 0.0);
+
+    vec3 viewDir = normalize(cameraPos - fragPos);
+    vec3 halfwayDir = normalize(lightVector + viewDir);    
+
+    float spec = pow(max(dot(normalize(normal), halfwayDir), 0.0), material.shininess);
+    float attenuation = getAttenuation(light.constant, light.linear, light.quadratic, light.position, fragPos);
+
+    float theta = dot(lightVector, normalize(-light.direction)); 
+    float epsilon = light.cutOff - light.outerCutOff;
+    float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
+
+    vec3 diffuse = dot_product * light.diffuse * light.color * intensity;
+    vec3 specular = light.specular * spec * light.color * intensity;
+	vec3 ambient = light.ambient * light.color * intensity;
+
+    return (ambient+diffuse+specular);
+};
+
+
+uniform PointLight pointLight[MAX_POINT_LIGHTS];
+uniform DirLight dirLight;
+uniform SpotLight spotLight;    
 
 void main(void){
-    vec3 lightVector = lightPosition - ex_worldPosition;
-   
-    vec4 specularStrength = vec4(specularStrength, 1.0); 
-
-    float dot_product = max(dot(normalize(ex_worldNormal), normalize(lightVector)), 0.0);
-    vec4 diffuse = dot_product * vec4(lightColor, 1.0f);
-    
-    vec3 viewDir = normalize(cameraPosition - ex_worldPosition);
-    vec3 halfwayDir = normalize(lightVector + viewDir);    
-    
-    float spec = pow(max(dot(normalize(ex_worldNormal), halfwayDir), 0.0), shininess);
-    vec4 specular = specularStrength*spec*vec4(lightColor,1.0f);
-
-    vec4 ambient = vec4(ambientStrength, 1.0);
-    out_Color = (ambient + diffuse + specular)*objectColor*attenuation;
+    vec3 norm = normalize(ex_worldNormal);
+    vec3 result;
+    if(dirLight.isDefined == 1){
+		result = CalcDirLight(dirLight, norm, Material(objectColor, shininess), cameraPosition, ex_worldPosition);
+	}
+    for(int i = 0; i < MAX_POINT_LIGHTS; i++)
+    {
+		if(pointLight[i].isDefined == 1)
+            result += CalcPointLight(pointLight[i], norm, ex_worldPosition, cameraPosition, Material(objectColor, shininess));
+    }
+    if(spotLight.isDefined == 1){
+        result+= CalcSpotLight(spotLight, norm, Material(objectColor, shininess), cameraPosition, ex_worldPosition);
+    }
+    out_Color = vec4(result, 1.0f) * objectColor;
 }

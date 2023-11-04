@@ -12,7 +12,6 @@
 #include <glm/mat4x4.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
 #include "../Headers/Observer/Observer.h"
-#include "../Headers/Light.h"
 class Camera;
 class Shader : public Observer
 {
@@ -26,13 +25,21 @@ private:
 
 public:
 	Shader(Camera* camera, const char* path_vertex_shader, const char* path_fragment_shader);
-	void update(Subject* s) override;
+	~Shader();
+
+	void update (const char* name, glm::vec4 value) override;
+	void update(const char* name, glm::vec3 value) override;
+	void update(const char* name, float value) override;
+	void update(const char* name, glm::mat4 value) override;
+	void update(const char* name, int value) override;
+	
 	void setUniform(const char* name, glm::vec4 value);
 	void setUniform(const char* name, glm::vec3 value);
 	void setUniform(const char* name, glm::mat4 value);
 	void setUniform(const char* name, float value);
+	void setUniform(const char* name, int value);
+	
 	void useShader();
 	void cancelShader();
-	void setMatrixModel(glm::mat4 modelMatrix);
-	~Shader();
+	void setMatrixModel(glm::mat4 modelMatrix);	
 };

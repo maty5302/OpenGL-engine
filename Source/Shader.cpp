@@ -35,28 +35,29 @@ Shader::Shader(Camera* camera, const char* path_vertex_shader, const char* path_
 	}
 }
 
-void Shader::update(Subject* s)
+void Shader::update(const char* name, glm::vec4 value)
 {
-	if (Camera* c = dynamic_cast<Camera*>(s))
-	{
-		GLint idViewTransform = glGetUniformLocation(this->shader_Program, "viewMatrix");
-		GLint idProjectionTransform = glGetUniformLocation(this->shader_Program, "projectionMatrix");
-		GLint idCameraPosition = glGetUniformLocation(this->shader_Program, "cameraPosition");
-		glUseProgram(this->shader_Program);
-		glUniformMatrix4fv(idViewTransform, 1, GL_FALSE, &this->camera->getViewMatrix()[0][0]);
-		glUniformMatrix4fv(idProjectionTransform, 1, GL_FALSE, &this->camera->getProjectionMatrix()[0][0]);
-		glUniform3f(idCameraPosition, this->camera->getEye().x, this->camera->getEye().y, this->camera->getEye().z);
-	}
-	if (Light* l = dynamic_cast<Light*>(s))
-	{
-		GLint idLightPosition = glGetUniformLocation(this->shader_Program, "lightPosition");
-		GLint idLightColor = glGetUniformLocation(this->shader_Program, "lightColor");
-		GLint idLightAttenuation = glGetUniformLocation(this->shader_Program, "attenuation");
-		glUseProgram(this->shader_Program);
-		glUniform3f(idLightPosition, l->getPosition().x, l->getPosition().y, l->getPosition().z);
-		glUniform3f(idLightColor, l->getColor().x, l->getColor().y, l->getColor().z);
-		glUniform1f(idLightAttenuation, l->getAttenuation());
-	}
+	this->setUniform(name, value);
+}
+
+void Shader::update(const char* name, glm::vec3 value)
+{
+	this->setUniform(name, value);
+}
+
+void Shader::update(const char* name, float value)
+{
+	this->setUniform(name, value);
+}
+
+void Shader::update(const char* name, glm::mat4 value)
+{
+	this->setUniform(name, value);
+}
+
+void Shader::update(const char* name, int value)
+{
+	this->setUniform(name, value);
 }
 
 void Shader::setUniform(const char* name, glm::vec4 value)
@@ -86,6 +87,13 @@ void Shader::setUniform(const char* name, float value)
 	GLint id = glGetUniformLocation(this->shader_Program, name);
 	glUseProgram(this->shader_Program);
 	glUniform1f(id, value);
+}
+
+void Shader::setUniform(const char* name, int value)
+{
+	GLint id = glGetUniformLocation(this->shader_Program, name);
+	glUseProgram(this->shader_Program);
+	glUniform1i(id, value);
 }
 
 void Shader::useShader()

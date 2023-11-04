@@ -26,3 +26,7 @@ void Subject::addObserver(Observer* observer)
 void Subject::notify()
 {
 }
+
+void Subject::notify(int id)
+{
+}

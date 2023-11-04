@@ -28,6 +28,12 @@
     <Filter Include="Source Files\Observer">
       <UniqueIdentifier>{52e005f4-45de-4afc-9790-f8fd76336495}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Lights">
+      <UniqueIdentifier>{c6540ae9-5176-4379-9cc7-7883e2f17709}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lights">
+      <UniqueIdentifier>{cd3122f3-1a7b-4793-b88b-59eb238a59f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -72,11 +78,17 @@
     <ClCompile Include="Source\Subject.cpp">
       <Filter>Source Files\Observer</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Light.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Material.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Lights\DirectionLight.cpp">
+      <Filter>Source Files\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Lights\PointLight.cpp">
+      <Filter>Source Files\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Lights\SpotLight.cpp">
+      <Filter>Source Files\Lights</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -175,11 +187,20 @@
     <ClInclude Include="Models\tree.hpp">
       <Filter>Header Files\Models</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Light.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\Material.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Light\DirectionLight.h">
+      <Filter>Header Files\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Light\Light.h">
+      <Filter>Header Files\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Light\PointLight.h">
+      <Filter>Header Files\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Light\SpotLight.h">
+      <Filter>Header Files\Lights</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
