@@ -1,6 +1,8 @@
 #version 330
-in vec3 colorInput;
-out vec4 color;
+out vec4 frag_colour;
+in vec2 pass_texture_coords;
+uniform sampler2D textureUnitID;
 void main () {
-color = vec4(colorInput, 1.0f);
+    //frag_colour = vec4(pass_texture_coords,1.0,1.0); 
+    frag_colour = texture(textureUnitID, pass_texture_coords);
 }
