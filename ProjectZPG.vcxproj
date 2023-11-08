@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\SOIL2.1.20.0.8\build\native\SOIL2.props" Condition="Exists('packages\SOIL2.1.20.0.8\build\native\SOIL2.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -150,20 +151,26 @@
     <ClCompile Include="Source\Scale.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
+    <ClCompile Include="Source\Shader\FragmentShader.cpp" />
+    <ClCompile Include="Source\Shader\VertexShader.cpp" />
     <ClCompile Include="Source\Subject.cpp" />
+    <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\TransformationComposite.cpp" />
     <ClCompile Include="Source\Translation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Shaders\fragment.frag" />
     <None Include="Shaders\fragmentBlinn.frag" />
     <None Include="Shaders\fragmentConstant.frag" />
     <None Include="Shaders\fragmentLambert.frag" />
     <None Include="Shaders\fragmentPhong.frag" />
+    <None Include="Shaders\fragmentPhongTexture.frag" />
     <None Include="Shaders\fragmentPhongWrong.frag" />
     <None Include="Shaders\vertex.vert" />
     <None Include="Shaders\vertexConstant.vert" />
     <None Include="Shaders\vertexlights.vert" />
+    <None Include="Shaders\vertexLightsTexture.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Application.h" />
@@ -181,6 +188,9 @@
     <ClInclude Include="Headers\RenderModel.h" />
     <ClInclude Include="Headers\Scene.h" />
     <ClInclude Include="Headers\Shader.h" />
+    <ClInclude Include="Headers\Shader\FragmentShader.h" />
+    <ClInclude Include="Headers\Shader\VertexShader.h" />
+    <ClInclude Include="Headers\Texture.h" />
     <ClInclude Include="Headers\Transformation\Rotation.h" />
     <ClInclude Include="Headers\Transformation\Scale.h" />
     <ClInclude Include="Headers\Transformation\Transformation.h" />
@@ -189,12 +199,18 @@
     <ClInclude Include="Models\bushes.hpp" />
     <ClInclude Include="Models\gift.hpp" />
     <ClInclude Include="Models\plain.hpp" />
+    <ClInclude Include="Models\skycube.h" />
     <ClInclude Include="Models\sphere.hpp" />
     <ClInclude Include="Models\suzi_flat.hpp" />
     <ClInclude Include="Models\suzi_smooth.hpp" />
     <ClInclude Include="Models\tree.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Tenhle projekt odkazuje na balíčky NuGet, které nejsou v tomhle počítači k dispozici. Když je chcete stáhnout, použijte funkci obnovení balíčků NuGet.  Další informace najdete na adrese http://go.microsoft.com/fwlink/?LinkID=322105. Chybějícím souborem je soubor {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\SOIL2.1.20.0.8\build\native\SOIL2.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\SOIL2.1.20.0.8\build\native\SOIL2.props'))" />
+  </Target>
 </Project>

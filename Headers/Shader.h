@@ -12,19 +12,17 @@
 #include <glm/mat4x4.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
 #include "../Headers/Observer/Observer.h"
+#include "Shader/FragmentShader.h"
+#include "Shader/VertexShader.h"
 class Camera;
 class Shader : public Observer
 {
 private:
-	const char* vertex_shader;
-	const char* fragment_shader;
 	Camera *camera;
-	GLuint vertex_Shader;
-	GLuint fragment_Shader;
 	GLuint shader_Program;
 
 public:
-	Shader(Camera* camera, const char* path_vertex_shader, const char* path_fragment_shader);
+	Shader(Camera* camera, VertexShader* vertex, FragmentShader* fragment);
 	~Shader();
 
 	void update (const char* name, glm::vec4 value) override;

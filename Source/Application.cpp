@@ -61,7 +61,7 @@ void Application::initialization()
 	this->scenes.push_back(new Scene());
 	this->scenes[1]->makeScenePlanets();
 	this->scenes.push_back(new Scene());
-	this->scenes[2]->makeSceneLights();
+	this->scenes[2]->makeSceneTest();
 	this->scenes.push_back(new Scene());
 	this->scenes[3]->makeSceneResizeTest();
 	this->scenes.push_back(new Scene());

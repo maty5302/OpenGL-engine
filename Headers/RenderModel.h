@@ -18,12 +18,13 @@ class RenderModel
 {
 private: 
 	Model* model;
-	Shader* shader;
+	Shader* shaderProgram;
 	TransformationComposite* transform;
 	Material* material;
 public:
 	RenderModel(Model* model, Shader* shader, Material* material);
 	RenderModel(const float points[], int pointsCount, Shader* shader, Material* material); 
+	RenderModel(const float points[], int pointsCount, Shader* shader, Material* material, bool texture);
 	void applyTransformations();
 	void addTransformation(Transformation* transformation);
 	void removeTransformation(Transformation* transformation);

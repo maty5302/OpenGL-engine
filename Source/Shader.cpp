@@ -5,22 +5,12 @@
 #include <iostream>
 #include "../Headers/FileLoader.h"
 
-Shader::Shader(Camera* camera, const char* path_vertex_shader, const char* path_fragment_shader)
+Shader::Shader(Camera* camera, VertexShader* vertex, FragmentShader* fragment)
 {
-	std::string vertexShaderSource = FileLoader::loadShader(path_vertex_shader);
-	std::string fragmentShaderSource = FileLoader::loadShader(path_fragment_shader);
-	this->vertex_shader = vertexShaderSource.c_str();
-	this->fragment_shader = fragmentShaderSource.c_str();
 	this->camera = camera;
-	vertex_Shader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertex_Shader, 1, &vertex_shader, NULL);
-	glCompileShader(vertex_Shader);
-	fragment_Shader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragment_Shader, 1, &fragment_shader, NULL);
-	glCompileShader(fragment_Shader);
 	shader_Program = glCreateProgram();
-	glAttachShader(shader_Program, fragment_Shader);
-	glAttachShader(shader_Program, vertex_Shader);
+	glAttachShader(shader_Program, fragment->getFragmentShaderID());
+	glAttachShader(shader_Program, vertex->getVertexShaderID());
 	glLinkProgram(shader_Program);
 	GLint status;
 	glGetProgramiv(shader_Program, GL_LINK_STATUS, &status);
@@ -121,7 +111,5 @@ void Shader::setMatrixModel(glm::mat4 modelMatrix)
 Shader::~Shader()
 {
 	glDeleteProgram(shader_Program);
-	glDeleteShader(vertex_Shader);
-	glDeleteShader(fragment_Shader);
 	delete camera;
 }

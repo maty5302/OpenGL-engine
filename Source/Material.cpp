@@ -7,10 +7,22 @@ Material::Material(glm::vec3 ambient_r, glm::vec3 diffuse_r, glm::vec3 specular_
 	this->specular_r = specular_r;
 	this->shininess = shininess;
 	this->color = color;
+	this->texture = nullptr;
+}
+
+Material::Material(glm::vec3 ambient_r, glm::vec3 diffuse_r, glm::vec3 specular_r, float shininess, glm::vec4 color, Texture* texture)
+{
+	this->ambient_r = ambient_r;
+	this->diffuse_r = diffuse_r;
+	this->specular_r = specular_r;
+	this->shininess = shininess;
+	this->color = color;
+	this->texture = texture;
 }
 
 Material::~Material()
 {
+	delete this->texture;
 }
 
 glm::vec3 Material::getAmbient()
@@ -36,6 +48,11 @@ float Material::getShininess()
 glm::vec4 Material::getColor()
 {
 	return this->color;
+}
+
+Texture* Material::getTexture()
+{
+	return this->texture;
 }
 
 

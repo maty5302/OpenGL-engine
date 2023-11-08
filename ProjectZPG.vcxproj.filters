@@ -34,6 +34,12 @@
     <Filter Include="Source Files\Lights">
       <UniqueIdentifier>{cd3122f3-1a7b-4793-b88b-59eb238a59f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Shaders">
+      <UniqueIdentifier>{646b6f59-6ba6-4e42-aeb1-32eec2263fb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Shaders">
+      <UniqueIdentifier>{8798a726-18c2-40b0-8502-eb4585d647ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -90,6 +96,15 @@
     <ClCompile Include="Source\Lights\SpotLight.cpp">
       <Filter>Source Files\Lights</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Shader\VertexShader.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Shader\FragmentShader.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\fragment.frag">
@@ -117,6 +132,13 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Shaders\fragmentPhongWrong.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Shaders\fragmentPhongTexture.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\vertexLightsTexture.vert">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
@@ -201,6 +223,18 @@
     </ClInclude>
     <ClInclude Include="Headers\Light\SpotLight.h">
       <Filter>Header Files\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\skycube.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Shader\FragmentShader.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Shader\VertexShader.h">
+      <Filter>Header Files\Shaders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

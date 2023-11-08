@@ -18,6 +18,7 @@ private:
 	std::vector<float> points;
 public:
 	Model(const float points[], int pointsCount);
+	Model(const float points[], int pointsCount, bool texture);
 	~Model();
 	void useModel();
 	int getVertexCount();

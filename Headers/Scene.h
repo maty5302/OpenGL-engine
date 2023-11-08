@@ -27,7 +27,7 @@ public:
 	void notifyLights();
 	void makeSceneTrees();
 	void makeScenePhong();
-	void makeSceneLights();
+	void makeSceneTest();
 	void makeSceneResizeTest();
 	void makeScenePlanets();	
 	void addModel(RenderModel* model, Shader* shader);
