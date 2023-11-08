@@ -1,7 +1,7 @@
 /**
-* @file Shader.h
+* @file ShaderProgram.h
 *
-* @brief Class used to create and use shaders
+* @brief Class used to create and use shaderPrograms
 *
 * @author Prudil Matìj PRU0059
 * */
@@ -11,19 +11,19 @@
 #include <glm/vec3.hpp>
 #include <glm/mat4x4.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
-#include "../Headers/Observer/Observer.h"
-#include "Shader/FragmentShader.h"
-#include "Shader/VertexShader.h"
+#include "../Observer/Observer.h"
+#include "FragmentShader.h"
+#include "VertexShader.h"
 class Camera;
-class Shader : public Observer
+class ShaderProgram : public Observer
 {
 private:
 	Camera *camera;
 	GLuint shader_Program;
 
 public:
-	Shader(Camera* camera, VertexShader* vertex, FragmentShader* fragment);
-	~Shader();
+	ShaderProgram(Camera* camera, VertexShader* vertex, FragmentShader* fragment);
+	~ShaderProgram();
 
 	void update (const char* name, glm::vec4 value) override;
 	void update(const char* name, glm::vec3 value) override;

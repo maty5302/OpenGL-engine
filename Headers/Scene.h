@@ -15,7 +15,7 @@ class Scene
 private:
 	std::vector<RenderModel*> models;
 	std::vector<Light*> lights;
-	std::vector<Shader*> shaders;
+	std::vector<ShaderProgram*> shaderPrograms;
 	Camera* camera;
 	bool animated = false;
 	float delta= 0.0f;
@@ -30,7 +30,7 @@ public:
 	void makeSceneTest();
 	void makeSceneResizeTest();
 	void makeScenePlanets();	
-	void addModel(RenderModel* model, Shader* shader);
+	void addModel(RenderModel* model, ShaderProgram* shader);
 	void render();
 	void animate();
 	bool isAnimated();

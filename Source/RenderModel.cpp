@@ -1,7 +1,7 @@
 #include "../Headers/RenderModel.h"
 #include "../Headers/Transformation/TransformationComposite.h"
 
-RenderModel::RenderModel(Model* model, Shader* shader, Material* material)
+RenderModel::RenderModel(Model* model, ShaderProgram* shader, Material* material)
 {
 	glm::mat4 defaulfM = glm::mat4(1.0f);
 	this->model = model;
@@ -18,7 +18,7 @@ RenderModel::RenderModel(Model* model, Shader* shader, Material* material)
 		this->shaderProgram->setUniform("textureUnitID", this->material->getTexture()->getTextureUnitID());
 }
 
-RenderModel::RenderModel(const float points[], int pointsCount, Shader* shader, Material* material)
+RenderModel::RenderModel(const float points[], int pointsCount, ShaderProgram* shader, Material* material)
 {
 	glm::mat4 defaulfM = glm::mat4(1.0f);
 	this->model = new Model(points, pointsCount);
@@ -34,7 +34,7 @@ RenderModel::RenderModel(const float points[], int pointsCount, Shader* shader, 
 	if (this->material->getTexture() != nullptr)
 		this->shaderProgram->setUniform("textureUnitID", this->material->getTexture()->getTextureUnitID());
 }
-RenderModel::RenderModel(const float points[], int pointsCount, Shader* shader, Material* material, bool texture)
+RenderModel::RenderModel(const float points[], int pointsCount, ShaderProgram* shader, Material* material, bool texture)
 {
 	glm::mat4 defaulfM = glm::mat4(1.0f);
 	this->model = new Model(points, pointsCount, texture);

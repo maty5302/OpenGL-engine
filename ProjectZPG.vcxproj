@@ -150,8 +150,8 @@
     <ClCompile Include="Source\Rotation.cpp" />
     <ClCompile Include="Source\Scale.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
-    <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\Shader\FragmentShader.cpp" />
+    <ClCompile Include="Source\Shader\ShaderProgram.cpp" />
     <ClCompile Include="Source\Shader\VertexShader.cpp" />
     <ClCompile Include="Source\Subject.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
@@ -187,8 +187,8 @@
     <ClInclude Include="Headers\Observer\Subject.h" />
     <ClInclude Include="Headers\RenderModel.h" />
     <ClInclude Include="Headers\Scene.h" />
-    <ClInclude Include="Headers\Shader.h" />
     <ClInclude Include="Headers\Shader\FragmentShader.h" />
+    <ClInclude Include="Headers\Shader\ShaderProgram.h" />
     <ClInclude Include="Headers\Shader\VertexShader.h" />
     <ClInclude Include="Headers\Texture.h" />
     <ClInclude Include="Headers\Transformation\Rotation.h" />

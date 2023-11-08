@@ -7,9 +7,9 @@
 * */
 #pragma once
 #include <vector>
-#include "Shader.h"
+#include "Shader/ShaderProgram.h"
 #include "../Headers/Observer/Subject.h"
-class Shader;
+class ShaderProgram;
 class Camera : public Subject 
 {
 private:

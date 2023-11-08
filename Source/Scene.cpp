@@ -19,7 +19,7 @@
 void Scene::attachObservers()
 {
 	for (auto light : this->lights)
-		for (auto observer : this->shaders)
+		for (auto observer : this->shaderPrograms)
 			light->addObserver(observer);
 	this->camera->notify();
 	this->notifyLights();
@@ -30,7 +30,7 @@ Scene::Scene()
 	this->camera = new Camera();
 	this->lights = std::vector<Light*>();
 	this->models = std::vector<RenderModel*>();
-	this->shaders = std::vector<Shader*>();
+	this->shaderPrograms = std::vector<ShaderProgram*>();
 }
 
 Scene::~Scene()
@@ -41,7 +41,7 @@ Scene::~Scene()
 		delete model;
 	for(auto light : this->lights)
 		delete light;
-	for(auto shader : this->shaders)
+	for(auto shader : this->shaderPrograms)
 		delete shader;
 }
 
@@ -91,8 +91,8 @@ void Scene::makeSceneTrees()
 	Material* m_plain = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1.f), 32.0f, glm::vec4(0.0f, 0.5f, 0.0f, 1.0f),t);
 	for (size_t i = 0; i < 275; i++)
 	{
-		this->shaders.push_back(new Shader(this->camera, vertexShader, fragmentShader));
-		this->addModel(new RenderModel(model_tree, this->shaders[i],m), this->shaders[i]);
+		this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
+		this->addModel(new RenderModel(model_tree, this->shaderPrograms[i],m), this->shaderPrograms[i]);
 		this->models[i]->addTransformation(new Rotation(rand() % 360,glm::vec3(0.0f, 1.0f, 0.0f)));
 		this->models[i]->addTransformation(new Scale(glm::vec3(rand() % 10 / 10.0f + 0.5f)));
 		float x = rand() % 50;
@@ -102,8 +102,8 @@ void Scene::makeSceneTrees()
 	}
 	for (size_t i = 275; i < 295; i++)
 	{
-		this->shaders.push_back(new Shader(this->camera, vertexShader, fragmentShader));
-		this->addModel(new RenderModel(model_bushes, this->shaders[i],m), this->shaders[i]);
+		this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
+		this->addModel(new RenderModel(model_bushes, this->shaderPrograms[i],m), this->shaderPrograms[i]);
 		this->models[i]->addTransformation(new Rotation(rand() % 360, glm::vec3(0.0f, 1.0f, 0.0f)));
 		this->models[i]->addTransformation(new Scale(glm::vec3(rand() % 10 / 10.0f + 1.5f)));
 		float x = rand() % 50;
@@ -114,22 +114,22 @@ void Scene::makeSceneTrees()
 	Material* m_ball = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 	Material* m_suzi = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.0f, 0.5f, 1.0f, 1.0f));
 
-	this->shaders.push_back(new Shader(this->camera, vertexShaderTexture, fragmentShaderTexture));
-	this->addModel(new RenderModel(plain, sizeof(plain) / sizeof(float), this->shaders[295],m_plain,true), this->shaders[295]);
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture));
+	this->addModel(new RenderModel(plain, sizeof(plain) / sizeof(float), this->shaderPrograms[295],m_plain,true), this->shaderPrograms[295]);
 	this->models[295]->addTransformation(new Scale(glm::vec3(100.0f)));
 	this->models[295]->applyTransformations();
-	this->shaders.push_back(new Shader(this->camera, vertexShader, fragmentShader));	
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[296],m_ball), this->shaders[296]);
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));	
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaderPrograms[296],m_ball), this->shaderPrograms[296]);
 	this->models[296]->addTransformation(new Scale(glm::vec3(0.5f)));
 	this->models[296]->addTransformation(new Translation(glm::vec3(0.0f, 5.0f, 10.0f)));
 	this->models[296]->applyTransformations();
-	this->shaders.push_back(new Shader(this->camera, vertexShader, fragmentShader));
-	this->addModel(new RenderModel(gift, sizeof(gift) / sizeof(float), this->shaders[297], m_ball), this->shaders[297]);
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
+	this->addModel(new RenderModel(gift, sizeof(gift) / sizeof(float), this->shaderPrograms[297], m_ball), this->shaderPrograms[297]);
 	this->models[297]->addTransformation(new Scale(glm::vec3(2.5f)));
 	this->models[297]->addTransformation(new Translation(glm::vec3(0.0f, 0.0f, 8.0f)));
 	this->models[297]->applyTransformations();
-	this->shaders.push_back(new Shader(this->camera, vertexShader, fragmentShader));
-	this->addModel(new RenderModel(suziSmooth, sizeof(suziSmooth) / sizeof(float), this->shaders[298], m_suzi), this->shaders[298]);
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
+	this->addModel(new RenderModel(suziSmooth, sizeof(suziSmooth) / sizeof(float), this->shaderPrograms[298], m_suzi), this->shaderPrograms[298]);
 	this->models[298]->addTransformation(new Scale(glm::vec3(1.5f)));
 	this->models[298]->addTransformation(new Translation(glm::vec3(0.0f, 2.5f, 0.0f)));
 	this->models[298]->applyTransformations();
@@ -150,23 +150,23 @@ void Scene::makeScenePhong()
 	this->lights.push_back(new PointLight(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)));
 	this->lights.push_back(new PointLight(glm::vec3(0.0f, 3.0f, 0.0f), glm::vec3(1.0f)));
 	this->lights.push_back(new SpotLight(this->camera->getEye(), glm::vec3(1.0f), this->camera->getTarget(), glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f))));
-	this->shaders.push_back(new Shader(this->camera, vertexShader, fragmentShader));
-	this->shaders.push_back(new Shader(this->camera, vertexShader, fragmentShader));
-	this->shaders.push_back(new Shader(this->camera, vertexShader, fragmentShader));
-	this->shaders.push_back(new Shader(this->camera, vertexShader, fragmentShader));
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[0],m2), this->shaders[0]);
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaderPrograms[0],m2), this->shaderPrograms[0]);
 	this->models[0]->addTransformation(new Scale(glm::vec3(0.7f)));
 	this->models[0]->addTransformation(new Translation(glm::vec3(-2.0f, 0.0f, 0.0f)));
 	this->models[0]->applyTransformations();
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[1],m), this->shaders[1]);
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaderPrograms[1],m), this->shaderPrograms[1]);
 	this->models[1]->addTransformation(new Scale(glm::vec3(0.7f)));
 	this->models[1]->addTransformation(new Translation(glm::vec3(0.0f, 2.0f, 0.0f)));
 	this->models[1]->applyTransformations();
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[2],m), this->shaders[2]);
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaderPrograms[2],m), this->shaderPrograms[2]);
 	this->models[2]->addTransformation(new Scale(glm::vec3(0.7f)));
 	this->models[2]->addTransformation(new Translation(glm::vec3(2.0f, 0.0f, 0.0f)));
 	this->models[2]->applyTransformations();
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[3],m), this->shaders[3]);
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaderPrograms[3],m), this->shaderPrograms[3]);
 	this->models[3]->addTransformation(new Scale(glm::vec3(0.7f)));
 	this->models[3]->addTransformation(new Translation(glm::vec3(0.0f, -2.0f, 0.0f)));
 	this->models[3]->applyTransformations();
@@ -180,11 +180,11 @@ void Scene::makeSceneTest()
 	FragmentShader* fragmentShader = new FragmentShader("Shaders/fragment.frag");
 	this->animated = false;
 	this->lights.push_back(new DirectionLight(glm::vec3(3.0, 2.0, 0.0), glm::vec3(1.0f)));
-	this->shaders.push_back(new Shader(this->camera, vertexShader, fragmentShader));
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
 	Model* plain_textured = new Model(plain, sizeof(plain) / sizeof(float), true);
 	Texture* texture = new Texture("Textures/test.png", 0);
  	Material* m = new Material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.09f, 0.73f, 0.09f, 1.0f),texture);
-	this->addModel(new RenderModel(plain_textured, this->shaders[0], m), this->shaders[0]);
+	this->addModel(new RenderModel(plain_textured, this->shaderPrograms[0], m), this->shaderPrograms[0]);
 	this->attachObservers();
 }
 
@@ -198,18 +198,18 @@ void Scene::makeSceneResizeTest()
 	FragmentShader* fragmentShaderLambert = new FragmentShader("Shaders/fragmentLambert.frag");
 
 	this->animated = false;
-	//Scene objects with different shaders, constant, lambert and phong //todo add light and blinn-phong shader
+	//Scene objects with different shaderPrograms, constant, lambert and phong //todo add light and blinn-phong shader
 	this->lights.push_back(new PointLight(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)));
 	Material* m = new Material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.09f, 0.73f, 0.09f, 1.0f));
-	this->shaders.push_back(new Shader(this->camera, vertexShaderCons, fragmentShaderCons));
-	this->shaders.push_back(new Shader(this->camera, vertexShader, fragmentShaderLambert));
-	this->shaders.push_back(new Shader(this->camera, vertexShader, fragmentShader));
-	this->shaders.push_back(new Shader(this->camera, vertexShader, fragmentShaderBlinn));
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShaderCons, fragmentShaderCons));
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShaderLambert));
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShaderBlinn));
 
-	this->addModel(new RenderModel(tree, sizeof(tree) / sizeof(float), this->shaders[0],m), this->shaders[0]);
-	this->addModel(new RenderModel(suziFlat, sizeof(suziFlat) / sizeof(float), this->shaders[1],m), this->shaders[1]);
-	this->addModel(new RenderModel(suziSmooth, sizeof(suziSmooth) / sizeof(float), this->shaders[2],m), this->shaders[2]);
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[3],m), this->shaders[3]);
+	this->addModel(new RenderModel(tree, sizeof(tree) / sizeof(float), this->shaderPrograms[0],m), this->shaderPrograms[0]);
+	this->addModel(new RenderModel(suziFlat, sizeof(suziFlat) / sizeof(float), this->shaderPrograms[1],m), this->shaderPrograms[1]);
+	this->addModel(new RenderModel(suziSmooth, sizeof(suziSmooth) / sizeof(float), this->shaderPrograms[2],m), this->shaderPrograms[2]);
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaderPrograms[3],m), this->shaderPrograms[3]);
 
 	for(RenderModel* model : this->models)
 		model->addTransformation(new Scale(glm::vec3(0.7f)));
@@ -243,22 +243,22 @@ void Scene::makeScenePlanets()
 	Material* m5 = new Material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.89f, 0.67f, 0.58f, 1.0f));
 
 	this->lights.push_back(new DirectionLight(glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(1.0f)));
-	this->shaders.push_back(new Shader(this->camera, vertexShaderCons, fragmentShaderCons));
-	this->shaders.push_back(new Shader(this->camera, vertexShader, fragmentShader));
-	this->shaders.push_back(new Shader(this->camera, vertexShader, fragmentShader));
-	this->shaders.push_back(new Shader(this->camera, vertexShader, fragmentShader));
-	this->shaders.push_back(new Shader(this->camera, vertexShader, fragmentShader));
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShaderCons, fragmentShaderCons));
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
 
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[0],m), this->shaders[0]);
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[1],m2), this->shaders[1]);
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[2], m3), this->shaders[2]);
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[3], m4), this->shaders[3]);
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaders[4], m5), this->shaders[4]);
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaderPrograms[0],m), this->shaderPrograms[0]);
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaderPrograms[1],m2), this->shaderPrograms[1]);
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaderPrograms[2], m3), this->shaderPrograms[2]);
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaderPrograms[3], m4), this->shaderPrograms[3]);
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaderPrograms[4], m5), this->shaderPrograms[4]);
 
 	this->attachObservers();
 }
 
-void Scene::addModel(RenderModel* model, Shader* shader)
+void Scene::addModel(RenderModel* model, ShaderProgram* shader)
 {
 	this->models.push_back(model);
 	this->camera->addObserver(shader);
