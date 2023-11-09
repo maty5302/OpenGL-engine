@@ -1,4 +1,4 @@
-/**
+	/**
 * @file Scene.h
 *
 * @brief Class used for storing and rendering models to one scene
@@ -13,6 +13,7 @@
 class Scene
 {
 private:
+	RenderModel* skybox;
 	std::vector<RenderModel*> models;
 	std::vector<Light*> lights;
 	std::vector<ShaderProgram*> shaderPrograms;
@@ -22,6 +23,7 @@ private:
 	void attachObservers();
 public:	
 	Scene();
+	Scene(Model* skybox, Texture* texture);
 	~Scene();
 	Camera* getCamera();
 	void notifyLights();
@@ -32,6 +34,7 @@ public:
 	void makeScenePlanets();	
 	void addModel(RenderModel* model, ShaderProgram* shader);
 	void render();
+	void renderSkybox();
 	void animate();
 	bool isAnimated();
 };

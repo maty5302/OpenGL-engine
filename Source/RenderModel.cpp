@@ -37,7 +37,7 @@ RenderModel::RenderModel(const float points[], int pointsCount, ShaderProgram* s
 RenderModel::RenderModel(const float points[], int pointsCount, ShaderProgram* shader, Material* material, bool texture)
 {
 	glm::mat4 defaulfM = glm::mat4(1.0f);
-	this->model = new Model(points, pointsCount, texture);
+	this->model = new Model(points, pointsCount, texture,false);
 	this->shaderProgram = shader;
 	this->transform = new TransformationComposite();
 	this->shaderProgram->useShader();
@@ -71,9 +71,12 @@ void RenderModel::removeTransformation(Transformation* transformation)
 void RenderModel::render()
 {
 	this->shaderProgram->useShader();
-	if (this->material->getTexture() != nullptr)
-		this->shaderProgram->setUniform("textureUnitID", this->material->getTexture()->getTextureUnitID());
 	this->model->useModel();	
+}
+
+ShaderProgram* RenderModel::getShaderProgram()
+{
+	return this->shaderProgram;
 }
 
 RenderModel::~RenderModel()

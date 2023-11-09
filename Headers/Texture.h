@@ -8,6 +8,8 @@ private:
 	int textureUnitID = 0;
 public:
 	Texture(const char* filePath, int textureUnitID);
+	Texture(const char* filePosx, const char* fileNegx, const char* filePosy, const char* fileNegy, const char* filePosz, const char* fileNegz, int textureUnitID);
+	~Texture();
 	int getTextureUnitID();
 };
 

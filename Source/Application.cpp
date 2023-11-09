@@ -1,6 +1,6 @@
 #include "../Headers/Application.h"
 #include "../Headers/FileLoader.h"
-#include "../Models/tree.hpp"
+#include "../Models/skycube.h"
 
 Scene* Application::getScene()
 {
@@ -56,16 +56,23 @@ void Application::initialization()
 	//glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
 	glEnable(GL_DEPTH_TEST);
 
-	this->scenes.push_back(new Scene());
+	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+
+	Model* m = new Model(skycube, sizeof(skycube) / sizeof(float), false, false);
+	Texture* t = new Texture("Textures/cubemap/posx.jpg", "Textures/cubemap/negx.jpg", "Textures/cubemap/posy.jpg", "Textures/cubemap/negy.jpg", "Textures/cubemap/posz.jpg", "Textures/cubemap/negz.jpg", 0);
+
+
+	this->scenes.push_back(new Scene(m,t));
 	this->scenes[0]->makeScenePhong();
-	this->scenes.push_back(new Scene());
+	this->scenes.push_back(new Scene(m,t));
 	this->scenes[1]->makeScenePlanets();
-	this->scenes.push_back(new Scene());
+	this->scenes.push_back(new Scene(m,t));
 	this->scenes[2]->makeSceneTest();
-	this->scenes.push_back(new Scene());
+	this->scenes.push_back(new Scene(m,t));
 	this->scenes[3]->makeSceneResizeTest();
-	this->scenes.push_back(new Scene());
+	this->scenes.push_back(new Scene(m,t));
 	this->scenes[4]->makeSceneTrees();
+
 
 }
 
@@ -82,7 +89,8 @@ void Application::run()
 	while (!glfwWindowShouldClose(window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
+		this->activeScene->renderSkybox();
+		glClear(GL_DEPTH_BUFFER_BIT);
 		this->activeScene->render();
 		if(this->activeScene->isAnimated())
 			this->activeScene->animate();

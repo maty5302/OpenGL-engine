@@ -29,6 +29,7 @@ public:
 	void addTransformation(Transformation* transformation);
 	void removeTransformation(Transformation* transformation);
 	void render();
+	ShaderProgram* getShaderProgram();
 	~RenderModel();
 };
 

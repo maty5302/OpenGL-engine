@@ -16,9 +16,10 @@ private:
 	GLuint VBO = 0;
 	GLuint VAO = 0;
 	std::vector<float> points;
+	int rowCount = 0;
 public:
 	Model(const float points[], int pointsCount);
-	Model(const float points[], int pointsCount, bool texture);
+	Model(const float points[], int pointsCount, bool texture, bool normal);
 	~Model();
 	void useModel();
 	int getVertexCount();

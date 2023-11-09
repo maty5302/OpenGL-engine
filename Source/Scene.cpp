@@ -14,6 +14,7 @@
 #include "../Models/tree.hpp";
 #include "../Models/gift.hpp";
 #include "../Models/bushes.hpp"
+#include "../Models/skycube.h"
 #include "../Headers/Texture.h"
 
 void Scene::attachObservers()
@@ -31,11 +32,26 @@ Scene::Scene()
 	this->lights = std::vector<Light*>();
 	this->models = std::vector<RenderModel*>();
 	this->shaderPrograms = std::vector<ShaderProgram*>();
+	this->skybox = nullptr;
+}
+
+Scene::Scene(Model* skybox, Texture* texture)
+{
+	this->camera = new Camera();
+	this->lights = std::vector<Light*>();
+	this->models = std::vector<RenderModel*>();
+	this->shaderPrograms = std::vector<ShaderProgram*>();
+	this->skybox = new RenderModel(skybox, new ShaderProgram(this->camera,
+		new VertexShader("Shaders/vertexCube.vert"),
+		new FragmentShader("Shaders/fragmentCube.frag")), 
+		new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1.f), 32.0f, glm::vec4(0.0f, 0.5f, 0.0f, 1.0f),texture));
+	this->camera->addObserver(this->skybox->getShaderProgram());
 }
 
 Scene::~Scene()
 {
 	delete this->camera;
+	delete this->skybox;
 
 	for (auto model : this->models)
 		delete model;
@@ -83,13 +99,12 @@ void Scene::makeSceneTrees()
 	this->lights.push_back(new PointLight(glm::vec3(0.0f, 20.f, 20.0f), glm::vec3(1.0f)));
 	this->lights.push_back(new SpotLight(this->camera->getEye(), glm::vec3(1.0f), this->camera->getTarget(), glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f))));
 	this->camera->setEye(glm::vec3(0.0f, 15.0f, -10.0f));
-	this->camera->setTarget(glm::vec3(0.0f, 0.0f, -1.0f));
 	Model* model_tree = new Model(tree, sizeof(tree) / sizeof(float));
 	Model* model_bushes = new Model(bushes, sizeof(bushes) / sizeof(float));
 	Material* m = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1.f), 32.0f, glm::vec4(0.09f, 0.77f, 0.09f, 1.0f));
 	Texture* t = new Texture("Textures/grass.png", 2);
 	Material* m_plain = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1.f), 32.0f, glm::vec4(0.0f, 0.5f, 0.0f, 1.0f),t);
-	for (size_t i = 0; i < 275; i++)
+	for (size_t i = 0; i < 175; i++)
 	{
 		this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
 		this->addModel(new RenderModel(model_tree, this->shaderPrograms[i],m), this->shaderPrograms[i]);
@@ -100,7 +115,7 @@ void Scene::makeSceneTrees()
 		this->models[i]->addTransformation(new Translation(glm::vec3(x, 0.0f, z)));
 		this->models[i]->applyTransformations();
 	}
-	for (size_t i = 275; i < 295; i++)
+	for (size_t i = 175; i < 195; i++)
 	{
 		this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
 		this->addModel(new RenderModel(model_bushes, this->shaderPrograms[i],m), this->shaderPrograms[i]);
@@ -113,26 +128,33 @@ void Scene::makeSceneTrees()
 	}
 	Material* m_ball = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 	Material* m_suzi = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.0f, 0.5f, 1.0f, 1.0f));
+	Material* m_plainTextureWood = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.0f, 0.5f, 1.0f, 1.0f),new Texture("Textures/test.png",3));
+
 
 	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture));
-	this->addModel(new RenderModel(plain, sizeof(plain) / sizeof(float), this->shaderPrograms[295],m_plain,true), this->shaderPrograms[295]);
-	this->models[295]->addTransformation(new Scale(glm::vec3(100.0f)));
-	this->models[295]->applyTransformations();
+	this->addModel(new RenderModel(plain, sizeof(plain) / sizeof(float), this->shaderPrograms[195],m_plain,true), this->shaderPrograms[195]);
+	this->models[195]->addTransformation(new Scale(glm::vec3(100.0f)));
+	this->models[195]->applyTransformations();
 	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));	
-	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaderPrograms[296],m_ball), this->shaderPrograms[296]);
-	this->models[296]->addTransformation(new Scale(glm::vec3(0.5f)));
-	this->models[296]->addTransformation(new Translation(glm::vec3(0.0f, 5.0f, 10.0f)));
-	this->models[296]->applyTransformations();
+	this->addModel(new RenderModel(sphere, sizeof(sphere) / sizeof(float), this->shaderPrograms[196],m_ball), this->shaderPrograms[196]);
+	this->models[196]->addTransformation(new Scale(glm::vec3(0.5f)));
+	this->models[196]->addTransformation(new Translation(glm::vec3(0.0f, 5.0f, 10.0f)));
+	this->models[196]->applyTransformations();
 	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
-	this->addModel(new RenderModel(gift, sizeof(gift) / sizeof(float), this->shaderPrograms[297], m_ball), this->shaderPrograms[297]);
-	this->models[297]->addTransformation(new Scale(glm::vec3(2.5f)));
-	this->models[297]->addTransformation(new Translation(glm::vec3(0.0f, 0.0f, 8.0f)));
-	this->models[297]->applyTransformations();
+	this->addModel(new RenderModel(gift, sizeof(gift) / sizeof(float), this->shaderPrograms[197], m_ball), this->shaderPrograms[197]);
+	this->models[197]->addTransformation(new Scale(glm::vec3(2.5f)));
+	this->models[197]->addTransformation(new Translation(glm::vec3(0.0f, 0.0f, 8.0f)));
+	this->models[197]->applyTransformations();
 	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
-	this->addModel(new RenderModel(suziSmooth, sizeof(suziSmooth) / sizeof(float), this->shaderPrograms[298], m_suzi), this->shaderPrograms[298]);
-	this->models[298]->addTransformation(new Scale(glm::vec3(1.5f)));
-	this->models[298]->addTransformation(new Translation(glm::vec3(0.0f, 2.5f, 0.0f)));
-	this->models[298]->applyTransformations();
+	this->addModel(new RenderModel(suziSmooth, sizeof(suziSmooth) / sizeof(float), this->shaderPrograms[198], m_suzi), this->shaderPrograms[198]);
+	this->models[198]->addTransformation(new Scale(glm::vec3(1.5f)));
+	this->models[198]->addTransformation(new Translation(glm::vec3(0.0f, 2.5f, 0.0f)));
+	this->models[198]->applyTransformations();
+	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture));
+	this->addModel(new RenderModel(plain, sizeof(plain) / sizeof(float), this->shaderPrograms[199], m_plainTextureWood,true), this->shaderPrograms[199]);
+	this->models[199]->addTransformation(new Translation(glm::vec3(0.0f, 0.01f, 0.0f)));	
+	this->models[199]->addTransformation(new Scale(glm::vec3(14.0f)));
+	this->models[199]->applyTransformations();
 	this->attachObservers();
 }
 
@@ -176,13 +198,13 @@ void Scene::makeScenePhong()
 
 void Scene::makeSceneTest()
 {
-	VertexShader* vertexShader = new VertexShader("Shaders/vertex.vert");
-	FragmentShader* fragmentShader = new FragmentShader("Shaders/fragment.frag");
+	VertexShader* vertexShader = new VertexShader("Shaders/vertexCube.vert");
+	FragmentShader* fragmentShader = new FragmentShader("Shaders/fragmentCube.frag");
 	this->animated = false;
-	this->lights.push_back(new DirectionLight(glm::vec3(3.0, 2.0, 0.0), glm::vec3(1.0f)));
+	//this->lights.push_back(new DirectionLight(glm::vec3(3.0, 2.0, 0.0), glm::vec3(1.0f)));
 	this->shaderPrograms.push_back(new ShaderProgram(this->camera, vertexShader, fragmentShader));
-	Model* plain_textured = new Model(plain, sizeof(plain) / sizeof(float), true);
-	Texture* texture = new Texture("Textures/test.png", 0);
+	Model* plain_textured = new Model(skycube, sizeof(skycube) / sizeof(float), false,false);
+	Texture* texture = new Texture("Textures/cubemap/posx.jpg", "Textures/cubemap/negx.jpg", "Textures/cubemap/posy.jpg", "Textures/cubemap/negy.jpg", "Textures/cubemap/posz.jpg", "Textures/cubemap/negz.jpg", 2);
  	Material* m = new Material(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.5f), glm::vec3(0.5f), 32.0f, glm::vec4(0.09f, 0.73f, 0.09f, 1.0f),texture);
 	this->addModel(new RenderModel(plain_textured, this->shaderPrograms[0], m), this->shaderPrograms[0]);
 	this->attachObservers();
@@ -269,6 +291,13 @@ void Scene::render()
 	for (auto model : this->models)
 		model->render();
 }
+
+void Scene::renderSkybox()
+{
+	if(this->skybox != nullptr)
+		this->skybox->render();
+}
+
 
 void Scene::animate()
 {	

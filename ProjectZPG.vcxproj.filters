@@ -141,6 +141,12 @@
     <None Include="Shaders\vertexLightsTexture.vert">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Shaders\fragmentCube.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\vertexCube.vert">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Observer\Observer.h">
