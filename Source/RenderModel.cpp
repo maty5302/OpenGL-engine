@@ -10,43 +10,31 @@ RenderModel::RenderModel(Model* model, ShaderProgram* shader, Material* material
 	this->shaderProgram->useShader();
 	this->shaderProgram->setMatrixModel(defaulfM);
 	this->material = material;
-	this->shaderProgram->setUniform("objectColor", this->material->getColor());
-	this->shaderProgram->setUniform("shininess", this->material->getShininess());
-	this->shaderProgram->setUniform("specularStrength", this->material->getSpecular());
-	this->shaderProgram->setUniform("ambientStrength", this->material->getAmbient());
+	if (!this->material->isAllZero()) {
+		this->shaderProgram->setUniform("objectColor", this->material->getColor());
+		this->shaderProgram->setUniform("shininess", this->material->getShininess());
+		this->shaderProgram->setUniform("specularStrength", this->material->getSpecular());
+		this->shaderProgram->setUniform("ambientStrength", this->material->getAmbient());
+	}
 	if (this->material->getTexture() != nullptr)
 		this->shaderProgram->setUniform("textureUnitID", this->material->getTexture()->getTextureUnitID());
 }
 
-RenderModel::RenderModel(const float points[], int pointsCount, ShaderProgram* shader, Material* material)
+RenderModel::RenderModel(const float points[], int pointsCount, ShaderProgram* shader, Material* material, bool texture, bool normal)
 {
 	glm::mat4 defaulfM = glm::mat4(1.0f);
-	this->model = new Model(points, pointsCount);
+	this->model = new Model(points, pointsCount, texture,normal);
 	this->shaderProgram = shader;
 	this->transform = new TransformationComposite();
 	this->shaderProgram->useShader();
 	this->shaderProgram->setMatrixModel(defaulfM);
 	this->material = material;
-	this->shaderProgram->setUniform("objectColor", this->material->getColor());
-	this->shaderProgram->setUniform("shininess", this->material->getShininess());
-	this->shaderProgram->setUniform("specularStrength", this->material->getSpecular());
-	this->shaderProgram->setUniform("ambientStrength", this->material->getAmbient());
-	if (this->material->getTexture() != nullptr)
-		this->shaderProgram->setUniform("textureUnitID", this->material->getTexture()->getTextureUnitID());
-}
-RenderModel::RenderModel(const float points[], int pointsCount, ShaderProgram* shader, Material* material, bool texture)
-{
-	glm::mat4 defaulfM = glm::mat4(1.0f);
-	this->model = new Model(points, pointsCount, texture,false);
-	this->shaderProgram = shader;
-	this->transform = new TransformationComposite();
-	this->shaderProgram->useShader();
-	this->shaderProgram->setMatrixModel(defaulfM);
-	this->material = material;
-	this->shaderProgram->setUniform("objectColor", this->material->getColor());
-	this->shaderProgram->setUniform("shininess", this->material->getShininess());
-	this->shaderProgram->setUniform("specularStrength", this->material->getSpecular());
-	this->shaderProgram->setUniform("ambientStrength", this->material->getAmbient());
+	if (!this->material->isAllZero()) {
+		this->shaderProgram->setUniform("objectColor", this->material->getColor());
+		this->shaderProgram->setUniform("shininess", this->material->getShininess());
+		this->shaderProgram->setUniform("specularStrength", this->material->getSpecular());
+		this->shaderProgram->setUniform("ambientStrength", this->material->getAmbient());
+	}
 	if (this->material->getTexture() != nullptr)
 		this->shaderProgram->setUniform("textureUnitID", this->material->getTexture()->getTextureUnitID());
 }

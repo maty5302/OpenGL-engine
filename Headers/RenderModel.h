@@ -23,8 +23,7 @@ private:
 	Material* material;
 public:
 	RenderModel(Model* model, ShaderProgram* shader, Material* material);
-	RenderModel(const float points[], int pointsCount, ShaderProgram* shader, Material* material); 
-	RenderModel(const float points[], int pointsCount, ShaderProgram* shader, Material* material, bool texture);
+	RenderModel(const float points[], int pointsCount, ShaderProgram* shader, Material* material, bool texture, bool normal);
 	void applyTransformations();
 	void addTransformation(Transformation* transformation);
 	void removeTransformation(Transformation* transformation);

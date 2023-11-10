@@ -18,7 +18,6 @@ private:
 	std::vector<float> points;
 	int rowCount = 0;
 public:
-	Model(const float points[], int pointsCount);
 	Model(const float points[], int pointsCount, bool texture, bool normal);
 	~Model();
 	void useModel();

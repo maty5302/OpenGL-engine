@@ -21,11 +21,13 @@ private:
 public:
 	Material(glm::vec3 ambient_r, glm::vec3 diffuse_r, glm::vec3 specular_r, float shininess, glm::vec4 color);
 	Material(glm::vec3 ambient_r, glm::vec3 diffuse_r, glm::vec3 specular_r, float shininess, glm::vec4 color, Texture* texture);
+	Material(Texture* texture);
 	~Material();
 	glm::vec3 getAmbient();
 	glm::vec3 getDiffuse();
 	glm::vec3 getSpecular();
-	float getShininess();
 	glm::vec4 getColor();
 	Texture* getTexture();
+	bool isAllZero();
+	float getShininess();
 };

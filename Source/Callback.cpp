@@ -107,10 +107,10 @@ void Callback::cursor_callback(GLFWwindow* window, double x, double y)
 			c->pitch = 89.0f;
 		if (c->pitch < -89.0f)
 			c->pitch = -89.0f;
-		glm::vec3 front;
-		front.x = cos(glm::radians(c->yaw)) * cos(glm::radians(c->pitch));
-		front.y = sin(glm::radians(c->pitch));
-		front.z = sin(glm::radians(c->yaw)) * cos(glm::radians(c->pitch));
+		glm::vec3 front(
+			cos(glm::radians(c->yaw)) * cos(glm::radians(c->pitch)),
+			sin(glm::radians(c->pitch)),
+			sin(glm::radians(c->yaw)) * cos(glm::radians(c->pitch)));
 		c->setTarget(glm::normalize(front));
 		app->getScene()->notifyLights();
 	}

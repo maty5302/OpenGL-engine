@@ -13,10 +13,10 @@
 class Scene
 {
 private:
-	RenderModel* skybox;
 	std::vector<RenderModel*> models;
 	std::vector<Light*> lights;
 	std::vector<ShaderProgram*> shaderPrograms;
+	RenderModel* skybox;
 	Camera* camera;
 	bool animated = false;
 	float delta= 0.0f;
@@ -32,7 +32,7 @@ public:
 	void makeSceneTest();
 	void makeSceneResizeTest();
 	void makeScenePlanets();	
-	void addModel(RenderModel* model, ShaderProgram* shader);
+	void addModel(RenderModel* model);
 	void render();
 	void renderSkybox();
 	void animate();
