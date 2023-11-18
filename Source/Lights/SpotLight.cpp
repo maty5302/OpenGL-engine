@@ -11,8 +11,8 @@ SpotLight::SpotLight(glm::vec3 position, glm::vec3 color, glm::vec3 direction, f
 	this->constant = 1.0f;
 	this->linear = 0.09f;
 	this->quadratic = 0.032f;
-	this->ambient = glm::vec3(0.05f, 0.05f, 0.05f);
-	this->diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
+	this->ambient = glm::vec3(0.0f, 0.0f, 0.0f);
+	this->diffuse = glm::vec3(1.f, 1.f, 1.f);
 	this->specular = glm::vec3(1.0f, 1.0f, 1.0f);
 }
 
@@ -27,8 +27,8 @@ SpotLight::SpotLight(glm::vec3 position, glm::vec3 color, glm::vec3 direction, f
 	this->constant = constant;
 	this->linear = linear;
 	this->quadratic = quadratic;
-	this->ambient = glm::vec3(0.05f, 0.05f, 0.05f);
-	this->diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
+	this->ambient = glm::vec3(0.0f, 0.0f, 0.0f);
+	this->diffuse = glm::vec3(1.f, 1.f, 1.f);
 	this->specular = glm::vec3(1.0f, 1.0f, 1.0f);
 }
 

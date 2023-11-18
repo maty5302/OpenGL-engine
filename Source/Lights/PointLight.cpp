@@ -7,8 +7,8 @@ PointLight::PointLight(glm::vec3 pos, glm::vec3 color)
 	this->position = pos;
 	this->color = color;
 	this->constAttenuation = 1.0f;
-	this->linearAttenuation = 0.1f;
-	this->quadraticAttenuation = 1.0f;
+	this->linearAttenuation = 0.09f;
+	this->quadraticAttenuation = 0.032f;
 	this->ambient = glm::vec3(0.05f, 0.05f, 0.05f);
 	this->diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
 	this->specular = glm::vec3(1.0f, 1.0f, 1.0f);

@@ -27,6 +27,7 @@ public:
 	~Scene();
 	Camera* getCamera();
 	void notifyLights();
+	void makeScene();
 	void makeSceneTrees();
 	void makeScenePhong();
 	void makeSceneTest();

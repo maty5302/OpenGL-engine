@@ -60,7 +60,7 @@ void Application::initialization()
 
 	Model* m = new Model(skycube, sizeof(skycube) / sizeof(float), false, false);
 	Texture* t = new Texture("Textures/cubemap/posx.jpg", "Textures/cubemap/negx.jpg", "Textures/cubemap/posy.jpg", "Textures/cubemap/negy.jpg", "Textures/cubemap/posz.jpg", "Textures/cubemap/negz.jpg", 0);
-
+	Texture* night =  new Texture("Textures/nightCubeMap/BackImage.png", "Textures/nightCubeMap/FrontImage.png", "Textures/nightCubeMap/TopImage.png", "Textures/nightCubeMap/BottomImage.png", "Textures/nightCubeMap/RightImage.png", "Textures/nightCubeMap/LeftImage.png", 1);
 
 	this->scenes.push_back(new Scene(m,t));
 	this->scenes[0]->makeScenePhong();
@@ -70,8 +70,8 @@ void Application::initialization()
 	this->scenes[2]->makeSceneTest();
 	this->scenes.push_back(new Scene(m,t));
 	this->scenes[3]->makeSceneResizeTest();
-	this->scenes.push_back(new Scene(m,t));
-	this->scenes[4]->makeSceneTrees();
+	this->scenes.push_back(new Scene(m,night));
+	this->scenes[4]->makeScene();
 
 
 }

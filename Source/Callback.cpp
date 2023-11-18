@@ -112,7 +112,7 @@ void Callback::cursor_callback(GLFWwindow* window, double x, double y)
 			sin(glm::radians(c->pitch)),
 			sin(glm::radians(c->yaw)) * cos(glm::radians(c->pitch)));
 		c->setTarget(glm::normalize(front));
-		app->getScene()->notifyLights();
+		//app->getScene()->notifyLights(); //why this lags the scene trees?
 	}
 	printf("cursor_callback [%f,%f]\n",x,y);
 }

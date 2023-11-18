@@ -117,9 +117,9 @@ uniform DirLight dirLight;
 uniform SpotLight spotLight;
 
 void main(void){
-    
+
     vec3 norm = normalize(ex_worldNormal);
-    vec3 result;
+    vec3 result = vec3(0.0);
     if(dirLight.isDefined == 1){
 		result = CalcDirLight(dirLight, norm, Material(objectColor, shininess), cameraPosition, ex_worldPosition);
 	}
