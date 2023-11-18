@@ -1,3 +1,10 @@
+/**
+* @file Observer.h
+*
+* @brief Class used for observer pattern 
+*
+* @author Prudil Matìj PRU0059
+* */
 #pragma once
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>

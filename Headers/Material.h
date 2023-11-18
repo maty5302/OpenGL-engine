@@ -1,7 +1,7 @@
 /**
 * @file Material.h
 *
-* @brief 
+* @brief Class used for creating materials
 *
 * @author Prudil Matìj PRU0059
 * */

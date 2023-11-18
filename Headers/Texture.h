@@ -1,3 +1,10 @@
+/**
+* @file Texture.h
+*
+* @brief Class used for loading and storing textures
+*
+* @author Prudil Matìj PRU0059
+* */
 #pragma once
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
