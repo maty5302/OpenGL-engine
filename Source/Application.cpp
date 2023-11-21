@@ -24,7 +24,7 @@ void Application::initialization()
 		fprintf(stderr, "ERROR: could not start GLFW3\n");
 		exit(EXIT_FAILURE);
 	}
-	window = glfwCreateWindow(800, 600, "ZPG - PRU0059", NULL, NULL);
+	window = glfwCreateWindow(width, height, "ZPG - PRU0059", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -55,30 +55,25 @@ void Application::initialization()
 	glLoadIdentity();
 	//glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
 	glEnable(GL_DEPTH_TEST);
-
+	glEnable(GL_STENCIL_TEST);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 
 	Model* m = new Model(skycube, sizeof(skycube) / sizeof(float), false, false);
 	Texture* t = new Texture("Textures/cubemap/posx.jpg", "Textures/cubemap/negx.jpg", "Textures/cubemap/posy.jpg", "Textures/cubemap/negy.jpg", "Textures/cubemap/posz.jpg", "Textures/cubemap/negz.jpg", 0);
 	Texture* night =  new Texture("Textures/nightCubeMap/BackImage.png", "Textures/nightCubeMap/FrontImage.png", "Textures/nightCubeMap/TopImage.png", "Textures/nightCubeMap/BottomImage.png", "Textures/nightCubeMap/RightImage.png", "Textures/nightCubeMap/LeftImage.png", 1);
 
-	this->scenes.push_back(new Scene(m,t));
-	this->scenes[0]->makeScenePhong();
+	this->scenes.push_back(new Scene(m,night));
+	this->scenes[0]->makeScene();
 	this->scenes.push_back(new Scene(m,t));
 	this->scenes[1]->makeScenePlanets();
 	this->scenes.push_back(new Scene(m,t));
 	this->scenes[2]->makeSceneTest();
-	this->scenes.push_back(new Scene(m,t));
-	this->scenes[3]->makeSceneResizeTest();
-	this->scenes.push_back(new Scene(m,night));
-	this->scenes[4]->makeScene();
-
-
 }
 
 void Application::run()
 {
-	this->activeScene = this->scenes[1];
+	this->activeScene = this->scenes[0];
 	glfwSetKeyCallback(window, Callback::key_callback);
 	glfwSetCursorPosCallback(window, Callback::cursor_callback);
 	glfwSetMouseButtonCallback(window, Callback::button_callback);

@@ -23,6 +23,11 @@ void Subject::addObserver(Observer* observer)
 	this->observers.push_back(observer);
 }
 
+void Subject::removeObserver(Observer* observer)
+{
+	this->observers.erase(std::remove(this->observers.begin(), this->observers.end(), observer), this->observers.end());
+}
+
 void Subject::notify()
 {
 }
