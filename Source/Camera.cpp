@@ -1,5 +1,6 @@
 #include "../Headers/Camera.h"
 #include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/matrix_projection.hpp>
 
 Camera::Camera()
 {
@@ -7,7 +8,9 @@ Camera::Camera()
     this->target = glm::vec3(0.0f, 0.0f, -1.0f);
     this->up = glm::vec3(0.0f, 1.0f, 0.0f);
     this->fov = 70.f;
-    this->projectionMatrix = glm::perspective(glm::radians(this->fov), 4.0f / 3.0f, 0.1f, 100.0f);
+    this->width = 800;
+    this->height = 600;
+    this->projectionMatrix = glm::perspective(glm::radians(this->fov), (float)this->width / (float)this->height, 0.1f, 100.0f);
     this->yaw = -90.0f;
     this->pitch = 0.0f;
     this->sensitivity = 0.05f;
@@ -59,6 +62,24 @@ void Camera::setWindowSize(int width, int height)
 {
     this->projectionMatrix = glm::perspective(glm::radians(this->fov), (float)width / (float)height, 0.1f, 100.0f);
     this->notify();
+}
+
+int Camera::getResolutionWidth()
+{
+    return this->width;
+}
+
+int Camera::getResolutionHeight()
+{
+    return this->height;
+}
+
+void Camera::getPosGlobal(glm::vec3 screenX)
+{
+    glm::vec4 viewPort = glm::vec4(0, 0, this->width, this->height);
+    glm::vec3 pos = glm::unProject(screenX, this->getViewMatrix(), this->getProjectionMatrix(), viewPort);
+
+    printf("unProject [%f,%f,%f]\n", pos.x, pos.y, pos.z);
 }
 
 glm::mat4 Camera::getViewMatrix()

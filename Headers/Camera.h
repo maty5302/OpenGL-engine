@@ -20,6 +20,8 @@ private:
 	float fov;
 	float sensitivity;
 	float speed;
+	int width;
+	int height;
 
 public:
 	float yaw;
@@ -35,6 +37,10 @@ public:
 	glm::mat4 getProjectionMatrix();
 	float getSensitivity();
 	float getSpeed();
+	int getResolutionWidth();
+	int getResolutionHeight();
+	//
+	void getPosGlobal(glm::vec3 screenX);
 	void setEye(glm::vec3 eye);
 	void setTarget(glm::vec3 target);
 	void setWindowSize(int width, int height);

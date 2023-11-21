@@ -17,6 +17,8 @@
 class RenderModel
 {
 private: 
+	static int ID;
+	int objID;
 	Model* model;
 	ShaderProgram* shaderProgram;
 	TransformationComposite* transform;
@@ -28,6 +30,8 @@ public:
 	void addTransformation(Transformation* transformation);
 	void removeTransformation(Transformation* transformation);
 	void render();
+
+	int getID();
 	ShaderProgram* getShaderProgram();
 	~RenderModel();
 };

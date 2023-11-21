@@ -48,23 +48,18 @@ void Callback::key_callback(GLFWwindow* window, int key, int scancode, int actio
 		}
 		if (key == GLFW_KEY_1 && action == GLFW_PRESS)
 		{
+			app->getScene()->getCamera()->setWindowSize(app->width, app->height);
 			app->setScene(0);
 		}
 		if (key == GLFW_KEY_2 && action == GLFW_PRESS)
 		{
+			app->getScene()->getCamera()->setWindowSize(app->width, app->height);
 			app->setScene(1);
 		}
 		if (key == GLFW_KEY_3 && action == GLFW_PRESS)
 		{
+			app->getScene()->getCamera()->setWindowSize(app->width, app->height);
 			app->setScene(2);
-		}
-		if (key == GLFW_KEY_4 && action == GLFW_PRESS)
-		{
-			app->setScene(3);
-		}
-		if (key == GLFW_KEY_5 && action == GLFW_PRESS)
-		{
-			app->setScene(4);
 		}
 	}
 	
@@ -85,6 +80,8 @@ void Callback::window_size_callback(GLFWwindow* window, int width, int height)
 {
 	Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
 	printf("resize %d, %d \n", width, height);
+	app->width = width;
+	app->height = height;
 	app->getScene()->getCamera()->setWindowSize(width, height);
 	glViewport(0, 0, width, height);
 }
@@ -112,6 +109,7 @@ void Callback::cursor_callback(GLFWwindow* window, double x, double y)
 			sin(glm::radians(c->pitch)),
 			sin(glm::radians(c->yaw)) * cos(glm::radians(c->pitch)));
 		c->setTarget(glm::normalize(front));
+		
 		//app->getScene()->notifyLights(); //why this lags the scene trees?
 	}
 	printf("cursor_callback [%f,%f]\n",x,y);
@@ -126,9 +124,46 @@ void Callback::button_callback(GLFWwindow* window, int button, int action, int m
 		isMouseButtonPressed = !isMouseButtonPressed;
 		if (isMouseButtonPressed) {
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // Lock and hide the cursor
+			int width, height;
+			glfwGetWindowSize(window, &width, &height);
+			// Center the cursor
+			glfwSetCursorPos(window, width / 2, height / 2);
 		}
 		else {
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); // Release the cursor
+		}
+	}
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+	{
+		Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
+		GLbyte color[4];
+		GLfloat depth;
+		GLuint index;
+		if (!isMouseButtonPressed)
+		{
+			double xpos, ypos;
+			glfwGetCursorPos(window, &xpos, &ypos);
+			GLint x = (GLint)xpos;
+			GLint y = (GLint)ypos;
+			int newy = app->getScene()->getCamera()->getResolutionHeight() - y;
+			glReadPixels(x, newy, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
+			glReadPixels(x, newy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
+			glReadPixels(x, newy, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
+			printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth %f, stencil index %u\n", x, y, color[0], color[1], color[2], color[3], depth, index);
+			app->getScene()->getCamera()->getPosGlobal(glm::vec3(x, newy, depth));
+		}
+		else
+		{
+			int xpos, ypos;
+			glfwGetWindowSize(window, &xpos, &ypos);
+			GLint x = GLint(xpos/2);
+			GLint y = GLint(ypos/2);
+			glReadPixels(x, y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
+			glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
+			glReadPixels(x, y, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
+			printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth %f, stencil index %u\n", x, y, color[0], color[1], color[2], color[3], depth, index);
+			app->getScene()->getCamera()->getPosGlobal(glm::vec3(x, y, depth));
+			app->getScene()->removeModel(index);
 		}
 	}
 }

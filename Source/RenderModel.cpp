@@ -1,9 +1,12 @@
 #include "../Headers/RenderModel.h"
 #include "../Headers/Transformation/TransformationComposite.h"
 
+int RenderModel::ID = 0;
+
 RenderModel::RenderModel(Model* model, ShaderProgram* shader, Material* material)
 {
 	glm::mat4 defaulfM = glm::mat4(1.0f);
+	this->objID = ID++;
 	this->model = model;
 	this->shaderProgram = shader;
 	this->transform = new TransformationComposite();
@@ -23,6 +26,7 @@ RenderModel::RenderModel(Model* model, ShaderProgram* shader, Material* material
 RenderModel::RenderModel(const float points[], int pointsCount, ShaderProgram* shader, Material* material, bool texture, bool normal)
 {
 	glm::mat4 defaulfM = glm::mat4(1.0f);
+	this->objID = ID++;
 	this->model = new Model(points, pointsCount, texture,normal);
 	this->shaderProgram = shader;
 	this->transform = new TransformationComposite();
@@ -60,6 +64,11 @@ void RenderModel::render()
 {
 	this->shaderProgram->useShader();
 	this->model->useModel();	
+}
+
+int RenderModel::getID()
+{
+	return this->objID;
 }
 
 ShaderProgram* RenderModel::getShaderProgram()

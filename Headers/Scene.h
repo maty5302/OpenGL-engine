@@ -28,12 +28,11 @@ public:
 	Camera* getCamera();
 	void notifyLights();
 	void makeScene();
-	void makeSceneTrees();
 	void makeScenePhong();
 	void makeSceneTest();
-	void makeSceneResizeTest();
 	void makeScenePlanets();	
 	void addModel(RenderModel* model);
+	void removeModel(int id);
 	void render();
 	void renderSkybox();
 	void animate();
