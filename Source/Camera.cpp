@@ -60,6 +60,8 @@ void Camera::setTarget(glm::vec3 target)
 
 void Camera::setWindowSize(int width, int height)
 {
+    this->width = width;
+    this->height = height;
     this->projectionMatrix = glm::perspective(glm::radians(this->fov), (float)width / (float)height, 0.1f, 100.0f);
     this->notify();
 }
@@ -74,12 +76,13 @@ int Camera::getResolutionHeight()
     return this->height;
 }
 
-void Camera::getPosGlobal(glm::vec3 screenX)
+glm::vec3 Camera::getPosGlobal(glm::vec3 screenX)
 {
     glm::vec4 viewPort = glm::vec4(0, 0, this->width, this->height);
     glm::vec3 pos = glm::unProject(screenX, this->getViewMatrix(), this->getProjectionMatrix(), viewPort);
 
     printf("unProject [%f,%f,%f]\n", pos.x, pos.y, pos.z);
+    return pos;
 }
 
 glm::mat4 Camera::getViewMatrix()

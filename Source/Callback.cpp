@@ -2,6 +2,7 @@
 #include "../Headers/Camera.h"
 
 bool Callback::isMouseButtonPressed = false;
+bool Callback::removeOrAdd = false;
 
 void Callback::error_callback(int error, const char* description)
 {
@@ -61,9 +62,13 @@ void Callback::key_callback(GLFWwindow* window, int key, int scancode, int actio
 			app->getScene()->getCamera()->setWindowSize(app->width, app->height);
 			app->setScene(2);
 		}
+		if (key == GLFW_KEY_E && action == GLFW_PRESS)
+		{
+			removeOrAdd = !removeOrAdd;
+		}
 	}
 	
-	printf("key_callback [%d,%d,%d,%d] \n", key, scancode, action, mods);
+	//printf("key_callback [%d,%d,%d,%d] \n", key, scancode, action, mods);
 }
 
 void Callback::window_focus_callback(GLFWwindow* window, int focused)
@@ -112,13 +117,13 @@ void Callback::cursor_callback(GLFWwindow* window, double x, double y)
 		
 		//app->getScene()->notifyLights(); //why this lags the scene trees?
 	}
-	printf("cursor_callback [%f,%f]\n",x,y);
+	//printf("cursor_callback [%f,%f]\n",x,y);
 }
 
 void Callback::button_callback(GLFWwindow* window, int button, int action, int mode)
 {
 	if (action == GLFW_PRESS) {
-		printf("button_callback [%d,%d,%d]\n", button, action, mode);
+		//printf("button_callback [%d,%d,%d]\n", button, action, mode);
 	}
 	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS){
 		isMouseButtonPressed = !isMouseButtonPressed;
@@ -162,8 +167,16 @@ void Callback::button_callback(GLFWwindow* window, int button, int action, int m
 			glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
 			glReadPixels(x, y, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
 			printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth %f, stencil index %u\n", x, y, color[0], color[1], color[2], color[3], depth, index);
-			app->getScene()->getCamera()->getPosGlobal(glm::vec3(x, y, depth));
-			app->getScene()->removeModel(index);
+			glm::vec3 pos = app->getScene()->getCamera()->getPosGlobal(glm::vec3(x, y, depth));
+			if(removeOrAdd)
+				app->getScene()->removeModel(index);
+			else
+			{
+				VertexShader* vertexShader = new VertexShader("Shaders/vertexLightsTexture.vert");
+				FragmentShader* fragmentShader = new FragmentShader("Shaders/fragmentPhongTexture.frag");
+				ShaderProgram* shaderProgram = new ShaderProgram(app->getScene()->getCamera(),vertexShader, fragmentShader);
+				app->getScene()->addModel(new RenderModel(app->getScene()->getPreloadModel(0), shaderProgram, new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f), glm::vec3(1.f), 32.0f, glm::vec4(0.0f, 0.5f, 1.f, 1.0f), new Texture("Textures/tree.png", 7)),true),pos);
+			}
 		}
 	}
 }

@@ -18,13 +18,13 @@ class RenderModel
 {
 private: 
 	static int ID;
-	int objID;
+	int objID = -1;
 	Model* model;
 	ShaderProgram* shaderProgram;
 	TransformationComposite* transform;
 	Material* material;
 public:
-	RenderModel(Model* model, ShaderProgram* shader, Material* material);
+	RenderModel(Model* model, ShaderProgram* shader, Material* material, bool setID);
 	RenderModel(const float points[], int pointsCount, ShaderProgram* shader, Material* material, bool texture, bool normal);
 	void applyTransformations();
 	void addTransformation(Transformation* transformation);

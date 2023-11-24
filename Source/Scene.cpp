@@ -33,7 +33,9 @@ Scene::Scene()
 	this->lights = std::vector<Light*>();
 	this->models = std::vector<RenderModel*>();
 	this->shaderPrograms = std::vector<ShaderProgram*>();
+	this->preloadModels = std::vector<Model*>();
 	this->skybox = nullptr;
+	this->preloadModels.push_back(FileLoader::loadModel("Models/tree.obj"));
 }
 
 Scene::Scene(Model* skybox, Texture* texture)
@@ -41,12 +43,14 @@ Scene::Scene(Model* skybox, Texture* texture)
 	this->camera = new Camera();
 	this->lights = std::vector<Light*>();
 	this->models = std::vector<RenderModel*>();
-	this->shaderPrograms = std::vector<ShaderProgram*>();
+	this->shaderPrograms = std::vector<ShaderProgram*>(); 
+	this->preloadModels = std::vector<Model*>();
 	this->skybox = new RenderModel(skybox, new ShaderProgram(this->camera,
 		new VertexShader("Shaders/vertexCube.vert"),
 		new FragmentShader("Shaders/fragmentCube.frag")), 
-		new Material(texture));
+		new Material(texture),true);
 	this->camera->addObserver(this->skybox->getShaderProgram());
+	this->preloadModels.push_back(FileLoader::loadModel("Models/tree.obj"));
 }
 
 Scene::~Scene()
@@ -98,7 +102,7 @@ void Scene::makeScene()
 	Model* rat = FileLoader::loadModel("Models/rat.obj");
 	Model* duck = FileLoader::loadModel("Models/Duck.obj");
 	Model* house = FileLoader::loadModel("Models/model.obj");
-	Model* model_tree = FileLoader::loadModel("Models/tree.obj");
+	Model* model_tree = this->preloadModels[0];
 	//Textures
 	Texture* tFloor = new Texture("Textures/grass.png", 2);
 	Texture* tCat = new Texture("Textures/Cat_diffuse.jpg", 3);
@@ -114,41 +118,49 @@ void Scene::makeScene()
 	Material* mHouse = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f), glm::vec3(1.f), 32.0f, glm::vec4(0.0f, 0.5f, 1.0f, 1.0f), tHouse);
 	Material* mTree = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f), glm::vec3(1.f), 32.0f, glm::vec4(0.0f, 0.5f, 1.f, 1.0f), tTree);
 	//Models
-	this->addModel(new RenderModel(floor, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture), mFloor));
+	this->addModel(new RenderModel(floor, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture), mFloor,false));
 	this->models[0]->addTransformation(new Scale(glm::vec3(100.0f)));
 	this->models[0]->applyTransformations();
 	///
-	this->addModel(new RenderModel(cat, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture), mCat));
+	this->addModel(new RenderModel(cat, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture), mCat,true));
 	this->models[1]->addTransformation(new Translation(glm::vec3(-2.0f, 0.0f, 1.0f)));
 	this->models[1]->addTransformation(new Rotation(90.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
 	this->models[1]->addTransformation(new Scale(glm::vec3(0.03f)));
 	this->models[1]->applyTransformations();
 
-	this->addModel(new RenderModel(rat, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture), mRat));
+	this->addModel(new RenderModel(rat, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture), mRat,true));
 	this->models[2]->addTransformation(new Translation(glm::vec3(2.0f, 0.0f, 1.0f)));
 	this->models[2]->addTransformation(new Rotation(180.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
 
 	this->models[2]->applyTransformations();
 
-	this->addModel(new RenderModel(duck, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture), mDuck));
+	this->addModel(new RenderModel(duck, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture), mDuck,true));
 	this->models[3]->addTransformation(new Translation(glm::vec3(2.0f, 0.0f, -1.0f)));
 	this->models[3]->addTransformation(new Rotation(180.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
 	this->models[3]->addTransformation(new Scale(glm::vec3(0.02f)));
 	this->models[3]->applyTransformations();
 
-	this->addModel(new RenderModel(house, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture), mHouse));
+	this->addModel(new RenderModel(house, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture), mHouse,true));
 	this->models[4]->addTransformation(new Translation(glm::vec3(0.0f, 0.0f, 40.0f)));
 	this->models[4]->applyTransformations();
 
 	//treees
 	for (size_t i = 5; i < 200; i++)
 	{
-		this->addModel(new RenderModel(model_tree, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture), mTree));
-		this->models[i]->addTransformation(new Rotation(rand() % 360, glm::vec3(0.0f, 1.0f, 0.0f)));
-		this->models[i]->addTransformation(new Scale(glm::vec3(rand() % 5 / 15.0f)));
+		this->addModel(new RenderModel(model_tree, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture), mTree,true));
 		float x = float(rand() % 30);
 		float z = float(rand() % 30);
+		if (i % 2 == 0)
+		{
+				x = -x;
+		}
+		else
+		{
+				z = -z;
+		}
 		this->models[i]->addTransformation(new Translation(glm::vec3(x, 0.0f, z)));
+		this->models[i]->addTransformation(new Rotation(rand() % 360, glm::vec3(0.0f, 1.0f, 0.0f)));
+		this->models[i]->addTransformation(new Scale(glm::vec3(rand() % 5 / 15.0f)));
 		this->models[i]->applyTransformations();
 	}
 
@@ -227,6 +239,16 @@ void Scene::addModel(RenderModel* model)
 	this->shaderPrograms.push_back(model->getShaderProgram());
 }
 
+void Scene::addModel(RenderModel* model, glm::vec3 location)
+{
+	this->models.push_back(model);
+	this->models[this->models.size() - 1]->addTransformation(new Translation(location));
+	this->models[this->models.size()-1]->applyTransformations();
+	this->camera->addObserver(model->getShaderProgram());
+	this->shaderPrograms.push_back(model->getShaderProgram());
+	this->attachObservers();
+}
+
 void Scene::removeModel(int id)
 {
 	for (int i = 0; i < this->models.size(); i++)
@@ -244,7 +266,8 @@ void Scene::removeModel(int id)
 void Scene::render()
 {
 	for (auto model : this->models){
-		glStencilFunc(GL_ALWAYS, model->getID(), 0xFF);
+		if(model->getID()!=-1)
+			glStencilFunc(GL_ALWAYS, model->getID(), 0xFF);
 		model->render();
 	}
 		
@@ -316,4 +339,9 @@ void Scene::animate()
 bool Scene::isAnimated()
 {
 	return this->animated;
+}
+
+Model* Scene::getPreloadModel(int id)
+{
+	return this->preloadModels[id];
 }

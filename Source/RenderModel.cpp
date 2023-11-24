@@ -3,10 +3,11 @@
 
 int RenderModel::ID = 0;
 
-RenderModel::RenderModel(Model* model, ShaderProgram* shader, Material* material)
+RenderModel::RenderModel(Model* model, ShaderProgram* shader, Material* material,bool setID)
 {
 	glm::mat4 defaulfM = glm::mat4(1.0f);
-	this->objID = ID++;
+	if(setID)
+		this->objID = ID++;
 	this->model = model;
 	this->shaderProgram = shader;
 	this->transform = new TransformationComposite();

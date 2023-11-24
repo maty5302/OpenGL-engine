@@ -13,6 +13,7 @@
 class Scene
 {
 private:
+	std::vector<Model*> preloadModels;
 	std::vector<RenderModel*> models;
 	std::vector<Light*> lights;
 	std::vector<ShaderProgram*> shaderPrograms;
@@ -32,10 +33,12 @@ public:
 	void makeSceneTest();
 	void makeScenePlanets();	
 	void addModel(RenderModel* model);
+	void addModel(RenderModel* model, glm::vec3 location);
 	void removeModel(int id);
 	void render();
 	void renderSkybox();
 	void animate();
 	bool isAnimated();
+	Model* getPreloadModel(int id);
 };
 

@@ -40,7 +40,7 @@ public:
 	int getResolutionWidth();
 	int getResolutionHeight();
 	//
-	void getPosGlobal(glm::vec3 screenX);
+	glm::vec3 getPosGlobal(glm::vec3 screenX);
 	void setEye(glm::vec3 eye);
 	void setTarget(glm::vec3 target);
 	void setWindowSize(int width, int height);
