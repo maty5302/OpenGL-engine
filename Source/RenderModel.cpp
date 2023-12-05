@@ -1,5 +1,6 @@
 #include "../Headers/RenderModel.h"
 #include "../Headers/Transformation/TransformationComposite.h"
+#include "../Headers/Transformation/BezierTranslation.h"
 
 int RenderModel::ID = 0;
 
@@ -64,7 +65,18 @@ void RenderModel::removeTransformation(Transformation* transformation)
 void RenderModel::render()
 {
 	this->shaderProgram->useShader();
-	this->model->useModel();	
+	this->model->useModel();
+	bool bezier = false;
+	for (int i = 0; i < this->transform->transformations.size(); i++) {
+		Transformation* t = this->transform->transformations[i];
+		if (BezierTranslation* bt = dynamic_cast<BezierTranslation*>(t))
+			bezier = true;
+	}
+	if (bezier)
+	{
+		this->transform->compute();
+		this->shaderProgram->setMatrixModel(this->transform->getModelMatrix());
+	}
 }
 
 int RenderModel::getID()

@@ -105,6 +105,12 @@
     <ClCompile Include="Source\Material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Transformation\BezierTranslation.cpp">
+      <Filter>Source Files\Transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Transformation\LineTranslation.cpp">
+      <Filter>Source Files\Transformation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\fragment.frag">
@@ -244,6 +250,12 @@
     </ClInclude>
     <ClInclude Include="Models\building.h">
       <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Transformation\BezierTranslation.h">
+      <Filter>Header Files\Transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Transformation\LineTranslation.h">
+      <Filter>Header Files\Transformation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

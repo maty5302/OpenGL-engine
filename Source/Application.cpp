@@ -87,8 +87,6 @@ void Application::run()
 		this->activeScene->renderSkybox();
 		glClear(GL_DEPTH_BUFFER_BIT);
 		this->activeScene->render();
-		if(this->activeScene->isAnimated())
-			this->activeScene->animate();
 		// update other events like input handling
 		glfwPollEvents();
 		// put the stuff we’ve been drawing onto the display
@@ -98,6 +96,8 @@ void Application::run()
 
 Application::Application()
 {
+	activeScene = nullptr;
+	window = nullptr;
 }
 
 Application::~Application()

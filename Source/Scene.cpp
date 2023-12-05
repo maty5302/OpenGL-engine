@@ -1,12 +1,14 @@
-#include "../Headers/Scene.h"
-#include "../Headers/Camera.h"
+#include "../Headers/Scene.h";
+#include "../Headers/Camera.h";
 #include "../Headers/FileLoader.h";
-#include "../Headers/Transformation/Rotation.h"
-#include "../Headers/Transformation/Translation.h"
-#include "../Headers/Transformation/Scale.h"
-#include "../Headers/Light/PointLight.h"
-#include "../Headers/Light/DirectionLight.h"
-#include "../Headers/Light/SpotLight.h"
+#include "../Headers/Transformation/LineTranslation.h";
+#include "../Headers/Transformation/BezierTranslation.h";
+#include "../Headers/Transformation/Rotation.h";
+#include "../Headers/Transformation/Translation.h";
+#include "../Headers/Transformation/Scale.h";
+#include "../Headers/Light/PointLight.h";
+#include "../Headers/Light/DirectionLight.h";
+#include "../Headers/Light/SpotLight.h";
 #include "../Models/sphere.hpp";
 #include "../Models/plain.hpp";
 #include "../Models/suzi_smooth.hpp";
@@ -102,6 +104,7 @@ void Scene::makeScene()
 	Model* rat = FileLoader::loadModel("Models/rat.obj");
 	Model* duck = FileLoader::loadModel("Models/Duck.obj");
 	Model* house = FileLoader::loadModel("Models/model.obj");
+	Model* gift_m = new Model(gift, sizeof(gift) / sizeof(float),false,true);
 	Model* model_tree = this->preloadModels[0];
 	//Textures
 	Texture* tFloor = new Texture("Textures/grass.png", 2);
@@ -123,10 +126,22 @@ void Scene::makeScene()
 	this->models[0]->applyTransformations();
 	///
 	this->addModel(new RenderModel(cat, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture), mCat,true));
+	
+	//te->addTransformation(new LineTranslation(glm::vec3(0, 0, 0), glm::vec3(6, 0, 0), t));
+	BezierTranslation* b = new BezierTranslation(0.5f);
+	b->addPoint(glm::vec3(-1, 0, 0));
+	b->addPoint(glm::vec3(0, 1, 0));
+	b->addPoint(glm::vec3(0, -1, 0));
+	b->addPoint(glm::vec3(1, 0, 0));	
+	b->addPoint(glm::vec3(1, 0, 0));
+	b->addPoint(glm::vec3(1, 1, 1));
+	b->addPoint(glm::vec3(0, 0, 0));
+	b->addPoint(glm::vec3(-1, -1, -1));
+	this->models[1]->addTransformation(b);
 	this->models[1]->addTransformation(new Translation(glm::vec3(-2.0f, 0.0f, 1.0f)));
 	this->models[1]->addTransformation(new Rotation(90.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
 	this->models[1]->addTransformation(new Scale(glm::vec3(0.03f)));
-	this->models[1]->applyTransformations();
+	
 
 	this->addModel(new RenderModel(rat, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture), mRat,true));
 	this->models[2]->addTransformation(new Translation(glm::vec3(2.0f, 0.0f, 1.0f)));
@@ -140,7 +155,7 @@ void Scene::makeScene()
 	this->models[3]->addTransformation(new Scale(glm::vec3(0.02f)));
 	this->models[3]->applyTransformations();
 
-	this->addModel(new RenderModel(house, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture), mHouse,true));
+	this->addModel(new RenderModel(house, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture), mHouse,false));
 	this->models[4]->addTransformation(new Translation(glm::vec3(0.0f, 0.0f, 40.0f)));
 	this->models[4]->applyTransformations();
 
@@ -150,19 +165,17 @@ void Scene::makeScene()
 		this->addModel(new RenderModel(model_tree, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture), mTree,true));
 		float x = float(rand() % 30);
 		float z = float(rand() % 30);
-		if (i % 2 == 0)
-		{
-				x = -x;
-		}
-		else
-		{
-				z = -z;
-		}
+		if(rand()%2==0)
+			x *= -1;
+		if (rand() % 3 == 0)
+			z *= -1;
+	
 		this->models[i]->addTransformation(new Translation(glm::vec3(x, 0.0f, z)));
 		this->models[i]->addTransformation(new Rotation(rand() % 360, glm::vec3(0.0f, 1.0f, 0.0f)));
 		this->models[i]->addTransformation(new Scale(glm::vec3(rand() % 5 / 15.0f)));
 		this->models[i]->applyTransformations();
 	}
+	//gifts - todo
 
 	this->attachObservers();
 }
@@ -243,6 +256,7 @@ void Scene::addModel(RenderModel* model, glm::vec3 location)
 {
 	this->models.push_back(model);
 	this->models[this->models.size() - 1]->addTransformation(new Translation(location));
+	this->models[this->models.size() - 1]->addTransformation(new Scale(glm::vec3 (0.5f)));
 	this->models[this->models.size()-1]->applyTransformations();
 	this->camera->addObserver(model->getShaderProgram());
 	this->shaderPrograms.push_back(model->getShaderProgram());
@@ -269,6 +283,8 @@ void Scene::render()
 		if(model->getID()!=-1)
 			glStencilFunc(GL_ALWAYS, model->getID(), 0xFF);
 		model->render();
+		if(animated)
+			this->animatePlanets();
 	}
 		
 }
@@ -282,7 +298,7 @@ void Scene::renderSkybox()
 }
 
 
-void Scene::animate()
+void Scene::animatePlanets()
 {	
 	delta += 0.01f;
 	//animation of scene planets
@@ -334,11 +350,6 @@ void Scene::animate()
 	this->models[4]->removeTransformation(t_venus);
 	this->models[0]->removeTransformation(c_sun);
 
-}
-
-bool Scene::isAnimated()
-{
-	return this->animated;
 }
 
 Model* Scene::getPreloadModel(int id)

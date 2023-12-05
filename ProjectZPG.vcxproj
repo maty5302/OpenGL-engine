@@ -156,6 +156,8 @@
     <ClCompile Include="Source\Subject.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\TransformationComposite.cpp" />
+    <ClCompile Include="Source\Transformation\BezierTranslation.cpp" />
+    <ClCompile Include="Source\Transformation\LineTranslation.cpp" />
     <ClCompile Include="Source\Translation.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +195,8 @@
     <ClInclude Include="Headers\Shader\ShaderProgram.h" />
     <ClInclude Include="Headers\Shader\VertexShader.h" />
     <ClInclude Include="Headers\Texture.h" />
+    <ClInclude Include="Headers\Transformation\BezierTranslation.h" />
+    <ClInclude Include="Headers\Transformation\LineTranslation.h" />
     <ClInclude Include="Headers\Transformation\Rotation.h" />
     <ClInclude Include="Headers\Transformation\Scale.h" />
     <ClInclude Include="Headers\Transformation\Transformation.h" />
