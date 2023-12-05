@@ -20,25 +20,31 @@ private:
 	RenderModel* skybox;
 	Camera* camera;
 	bool animated = false;
-	float delta= 0.0f;
+	float delta= 0.01f;
+
+	//private methods
 	void attachObservers();
+	void animatePlanets();
 public:	
 	Scene();
 	Scene(Model* skybox, Texture* texture);
 	~Scene();
+	//getters
 	Camera* getCamera();
-	void notifyLights();
-	void makeScene();
-	void makeScenePhong();
-	void makeSceneTest();
-	void makeScenePlanets();	
+	Model* getPreloadModel(int id);
+	//adding/removing
 	void addModel(RenderModel* model);
 	void addModel(RenderModel* model, glm::vec3 location);
 	void removeModel(int id);
+	//voids
+	void notifyLights();
+	//scene making
+	void makeScene();
+	void makeScenePhong();
+	void makeSceneTest();
+	void makeScenePlanets();
+	//rendering
 	void render();
 	void renderSkybox();
-	void animate();
-	bool isAnimated();
-	Model* getPreloadModel(int id);
 };
 
