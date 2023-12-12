@@ -9,8 +9,9 @@ uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 void main() {
-gl_Position = (projectionMatrix * viewMatrix * modelMatrix) * vec4 (position, 1.0);
-ex_worldPosition = vec3 (modelMatrix * vec4(position,1.0f));
+gl_Position = (projectionMatrix * viewMatrix * modelMatrix) * vec4(position,1.0f);
+vec4 newPos =modelMatrix * vec4(position,1.0f);
+ex_worldPosition = newPos.xyz / newPos.w;
 ex_worldNormal = normalize(transpose(inverse(mat3(modelMatrix))) * normalposition);
 ex_texcoord = texcoordposition;
 }

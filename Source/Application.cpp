@@ -68,7 +68,7 @@ void Application::initialization()
 	this->scenes.push_back(new Scene(m,t));
 	this->scenes[1]->makeScenePlanets();
 	this->scenes.push_back(new Scene(m,t));
-	this->scenes[2]->makeSceneTest();
+	this->scenes[2]->makeScenePhong();
 }
 
 void Application::run()

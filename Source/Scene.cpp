@@ -93,6 +93,7 @@ void Scene::makeScene()
 	//Shaders
 	VertexShader* vertexShaderTexture = new VertexShader("Shaders/vertexLightsTexture.vert");
 	FragmentShader* fragmentShaderTexture = new FragmentShader("Shaders/fragmentPhongTexture.frag");
+	FragmentShader* fragmentShaderTexture2 = new FragmentShader("Shaders/fragmentPhongFloor.frag");
 	//Lights
 	this->lights.push_back(new SpotLight(this->camera->getEye(), glm::vec3(1.0f), this->camera->getTarget(), glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f))));
 	this->lights.push_back(new PointLight(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f), 1.0f, 0.01f, 0.0032f));
@@ -121,7 +122,7 @@ void Scene::makeScene()
 	Material* mHouse = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f), glm::vec3(1.f), 32.0f, glm::vec4(0.0f, 0.5f, 1.0f, 1.0f), tHouse);
 	Material* mTree = new Material(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f), glm::vec3(1.f), 32.0f, glm::vec4(0.0f, 0.5f, 1.f, 1.0f), tTree);
 	//Models
-	this->addModel(new RenderModel(floor, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture), mFloor,false));
+	this->addModel(new RenderModel(floor, new ShaderProgram(this->camera, vertexShaderTexture, fragmentShaderTexture2), mFloor,false));
 	this->models[0]->addTransformation(new Scale(glm::vec3(100.0f)));
 	this->models[0]->applyTransformations();
 	///

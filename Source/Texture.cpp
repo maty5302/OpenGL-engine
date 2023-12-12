@@ -7,6 +7,8 @@ Texture::Texture(const char* filePath, int textureUnitID)
 	glActiveTexture(GL_TEXTURE0 + textureUnitID);
 	this->textureID = SOIL_load_OGL_texture(filePath, SOIL_LOAD_RGBA, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
 	glBindTexture(GL_TEXTURE_2D, textureID);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 }
 
 Texture::Texture(const char* filePosx, const char* fileNegx, const char* filePosy, const char* fileNegy, const char* filePosz, const char* fileNegz, int textureUnitID)
