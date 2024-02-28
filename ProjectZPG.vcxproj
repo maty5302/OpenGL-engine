@@ -162,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="README.md" />
     <None Include="Shaders\fragment.frag" />
     <None Include="Shaders\fragmentBlinn.frag" />
     <None Include="Shaders\fragmentConstant.frag" />
@@ -169,6 +170,7 @@
     <None Include="Shaders\fragmentLambert.frag" />
     <None Include="Shaders\fragmentPhong.frag" />
     <None Include="Shaders\fragmentPhongTexture.frag" />
+    <None Include="Shaders\fragmentPhongFloor.frag" />
     <None Include="Shaders\fragmentPhongWrong.frag" />
     <None Include="Shaders\vertex.vert" />
     <None Include="Shaders\vertexConstant.vert" />

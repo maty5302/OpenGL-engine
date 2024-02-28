@@ -153,6 +153,10 @@
     <None Include="Shaders\vertexCube.vert">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Shaders\fragmentPhongFloor.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Observer\Observer.h">

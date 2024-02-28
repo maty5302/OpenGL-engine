@@ -18,6 +18,10 @@ There are 3 testing scenes:
 
 - Scene 3 - Testing Blinn-phong shader
 
+# Demo
+
+![demo.gif](demo.gif)
+
 # Instalation
 
 For running this project and successfully compiling it, you need to have headers for these packages in the folder `lib` which needs to be outside of the project folder. Also you need to have at least VS2022 with C++ support downloaded.
