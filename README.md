@@ -3,9 +3,13 @@
 This is a project on the essentials of computer graphics. It's mostly written in C++ and OpenGL and it's a simple and old render engine
 
 Citation from my university:
-```
-The course aims to introduce students to the basics of computer graphics. To gain an overview of the basic principles of 2D and especially 3D computer graphics. During the semester, students will learn the basic principles of the graphics card and the display chain. The basic algorithms used in computer graphics will be presented step by step. The result will be a project on which students will demonstrate the knowledge they have gained, which will allow them to display a 3D scene, move the camera, objects, adjust lights, colors, textures, add shadows, transparency, normal maps, etc. to the scene.
-```
+
+> The course aims to introduce students to the basics of computer graphics. To gain an overview of the basic principles of 2D and especially
+> 3D computer graphics. During the semester, students will learn the basic principles of the graphics card and the display chain.
+> The basic algorithms used in computer graphics will be presented step by step. The result will be a project on which students will demonstrate
+> the knowledge they have gained, which will allow them to display a 3D scene, move the camera, objects, adjust lights, colors, textures,
+> add shadows, transparency, normal maps, etc. to the scene.
+
 There are 3 testing scenes:
 
 - Scene 1 - Main scene
@@ -16,8 +20,9 @@ There are 3 testing scenes:
 
 # Instalation
 
-For running this project and successfully compiling it, you need to have headers for these packages in the folder `lib` which needs to be outside of the project folder. 
+For running this project and successfully compiling it, you need to have headers for these packages in the folder `lib` which needs to be outside of the project folder. Also you need to have at least VS2022 with C++ support downloaded.
 
+Headers needed:
 ```
 glm
 glfw
